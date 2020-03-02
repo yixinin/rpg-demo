@@ -1,0 +1,12 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+//上分
+message UpCoinReq {
+    ReqHeader header = 1;
+}
+
+message DownCoinAck {
+    AckHeader header = 1;
+}

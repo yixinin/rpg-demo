@@ -1,0 +1,37 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+message GetGameRoomTypeListReq {
+    ReqHeader header = 1;
+    int32     gameId = 2;
+    string    Name   = 3;
+}
+
+message GetGameRoomTypeListAck {
+    AckHeader header = 1;
+    int32     gameId = 2;
+    message   GameTypeItem {
+        int32  gameType = 1;
+        string gameInfo = 2;
+        string extra    = 3;
+    }
+    repeated GameTypeItem items = 3;
+}
+message EnterGameReq {
+    ReqHeader header   = 1;
+    int32     gameId   = 2;
+    int32     gameType = 3;
+}
+
+message EnterGameAck {
+    AckHeader header = 1;
+}
+
+message ExitGameReq {
+    ReqHeader header = 1;
+}
+
+message ExitGameAck {
+    AckHeader header = 1;
+}

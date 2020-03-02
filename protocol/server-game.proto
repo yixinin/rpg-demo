@@ -1,0 +1,45 @@
+syntax = "proto3";
+package protocol;
+import "unity.proto";
+import "header.proto";
+
+message Player {
+    int64  playerId = 1;
+    string nickName = 2;
+    string avatar   = 3;
+    int64  coin     = 4;
+}
+
+message StartGameReq {
+    int64    roomId         = 1;
+    repeated Player players = 2;
+    string          roundNo = 3;
+}
+
+message CloseGameReq {
+    int64 roomId = 1;
+}
+
+message AddCoinReq {
+    int64 playerId = 1;
+    int64 coin     = 2;
+}
+message AddPlayerReq {
+    Player player = 1;
+}
+
+service GameService {
+    rpc KickUser(KickUserReq) returns (CallAck) {
+    }
+    rpc StartGame(StartGameReq) returns (CallAck) {
+    }
+    //强制中断游戏
+    rpc CloseGame(CloseGameReq) returns (CallAck) {
+    }
+    //上/下分
+    rpc AddCoin(AddCoinReq) returns (CallAck) {
+    }
+    //中途加入游戏/ 断线重连
+    rpc AddPlayer(AddPlayerReq) returns (CallAck) {
+    }
+}

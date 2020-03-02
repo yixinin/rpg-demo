@@ -1,0 +1,18 @@
+syntax = "proto3";
+package protocol;
+import "unity.proto";
+import "header.proto";
+
+message LinkGame4GateReq {
+    repeated int64 uid    = 1;
+    string         server = 2;
+}
+
+service GateService {
+    rpc KickUser(KickUserReq) returns (CallAck) {
+    }
+
+    //连接Game服务器
+    rpc LinkGameServer(stream LinkGame4GateReq) returns (CallAck) {
+    }
+}

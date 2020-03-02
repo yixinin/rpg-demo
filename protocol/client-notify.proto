@@ -1,0 +1,18 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+message MessageNotify {
+    NotiHeader header   = 1;
+    string     body     = 2;
+    int32      mType    = 3; //消息来源 1=系统消息 2=好友消息 3=房间消息 4=广播消息
+    int32      kind     = 4; //消息类型
+    string     extra    = 5;
+    int64      userId   = 6; //消息发送者
+    int64      userName = 7; //消息发送者
+}
+
+service NotifyService {
+    rpc PushMessage(MessageNotify) returns (CallAck) {
+    }
+}

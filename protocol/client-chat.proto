@@ -1,0 +1,26 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+message SendToUserReq {
+    ReqHeader header = 1;
+    string    body   = 2;
+    int32     kind   = 3; //消息类型
+    string    extra  = 4;
+    int64     userId = 5;
+}
+
+message SendToRoomReq {
+    ReqHeader header = 1;
+    string    body   = 2;
+    int32     kind   = 3; //消息类型
+    string    extra  = 4;
+    int64     roomId = 5;
+}
+
+message BoardcastReq {
+    ReqHeader header = 1;
+    string    body   = 2;
+    int32     kind   = 3; //消息类型
+    string    extra  = 4;
+}

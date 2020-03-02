@@ -1,0 +1,24 @@
+syntax = "proto3";
+package protocol;
+
+message ReqHeader {
+    int64  uid   = 1;
+    string token = 2;
+    int32  mid   = 3;
+}
+
+message AckHeader {
+    int32  code = 1;
+    string msg  = 2;
+    int64  uid  = 3;
+    int32  mid  = 4;
+}
+
+message NotiHeader {
+    int64 uid = 1;
+}
+
+message CallAck {
+    int32  code = 1;
+    string msg  = 2;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+message LoginReq {
+    ReqHeader header      = 1;
+    string    userName    = 2;
+    string    password    = 3;
+    string    validCode   = 4;
+    string    validId     = 5;
+    string    phoneNumber = 6;
+    string    DeviceCode  = 7;
+    string    InviteCode  = 8;
+    int32     loginType   = 9;  // 登录方式// 1；用户名密码；2：手机；3：微信；4：qq；5：设备码；10：内部token
+    bool register         = 10; //注册
+}
+
+message LoginAck {
+    AckHeader header     = 1;
+    string    token      = 2;
+    string    DeviceCode = 3;
+}
+
+message LogoutReq {
+    ReqHeader header = 1;
+}
+
+message LogoutAck {
+    AckHeader header = 1;
+}

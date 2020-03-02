@@ -1,0 +1,5 @@
+etcd:
+  # - localhost:2279
+  # - localhost:2479
+  - localhost:2679
+grpc: 7001
