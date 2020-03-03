@@ -1,4 +1,4 @@
-package gateway
+package main
 
 import (
 	"rpg-demo/config"
@@ -58,6 +58,7 @@ func (s *GrpcClient) GrpcConnect() {
 
 	if err != nil {
 		log.Error("err:%v", err)
+		return
 	}
 
 	for {

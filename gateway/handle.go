@@ -1,12 +1,17 @@
-package gateway
+package main
 
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"rpg-demo/lib/log"
 	"rpg-demo/protocol"
+	"rpg-demo/utils"
 
 	"github.com/davyxu/cellnet"
+	"github.com/davyxu/cellnet/codec"
+	"github.com/gin-gonic/gin"
 )
 
 func (g *Gateway) HandleCallback(ev cellnet.Event) {
@@ -15,13 +20,42 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 	var sess = ev.Session()
 	switch msg := ev.Message().(type) {
 	case *cellnet.SessionAccepted: // 接受一个连接
-		fmt.Println("server accepted")
+		fmt.Println("server accepted", msg.String())
 
+	case *cellnet.SessionClosed: // 会话连接断开
+		fmt.Println("session closed: ", ev.Session().ID())
+
+	}
+	g.handleMessage(ev.Message(), sess, sess.Send)
+}
+
+func (g *Gateway) handleHttp(c *gin.Context) {
+	data, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		return
+	}
+	var msgid = utils.BytesToUint16(data[:2])
+	msg, _, err := codec.DecodeMessage(int(msgid), data[2:])
+	if err != nil {
+		return
+	}
+	var send = func(m interface{}) {
+		data, _, err := codec.EncodeMessage(m, nil)
+		if err != nil {
+			return
+		}
+		c.Data(http.StatusOK, "data/bytes", data)
+	}
+	g.handleMessage(msg, nil, send)
+}
+
+func (g *Gateway) handleMessage(msgIntface interface{}, sess cellnet.Session, send func(m interface{})) error {
+	switch msg := msgIntface.(type) {
 	case *protocol.LoginReq: // 收到连接发送的消息
 		var rpcConn = g.grpcClient.RandCenter()
 		if rpcConn == nil {
 			log.Error("没有运行的center服务")
-			return
+			return nil
 		}
 		var client = protocol.NewCenter4GateServiceClient(rpcConn.Conn)
 		ack, err := client.Login(context.Background(), msg)
@@ -53,11 +87,11 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 			}
 
 		}
-		sess.Send(ack)
+		send(ack)
 	case *protocol.LogoutReq:
 		ok, err := g.server.CheckUser(msg.Header)
 		if !ok || err != nil {
-			return
+			return err
 		}
 		conn, err := g.server.GetByToken(msg.Header.Token)
 		if err != nil {
@@ -69,7 +103,7 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 
 		rpcConn, ok := g.grpcClient.centers[conn.CenterIP]
 		if !ok {
-			return
+			return err
 		}
 
 		var client = protocol.NewCenter4GateServiceClient(rpcConn)
@@ -77,14 +111,11 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 		if err != nil {
 			log.Error("rpc error:%v", err)
 		}
-		sess.Send(ack)
-
-	case *cellnet.SessionClosed: // 会话连接断开
-		fmt.Println("session closed: ", ev.Session().ID())
+		send(ack)
 	case *protocol.GetGameRoomTypeListReq:
 		ok, err := g.server.CheckUser(msg.Header)
 		if !ok || err != nil {
-			return
+			return err
 		}
 		conn, err := g.server.GetByToken(msg.Header.Token)
 		if err != nil {
@@ -96,7 +127,7 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 
 		rpcConn, ok := g.grpcClient.centers[conn.CenterIP]
 		if !ok {
-			return
+			return err
 		}
 
 		var client = protocol.NewCenter4GateServiceClient(rpcConn)
@@ -104,16 +135,10 @@ func (g *Gateway) HandleCallback(ev cellnet.Event) {
 		if err != nil {
 			log.Error("rpc error:%v", err)
 		}
-		sess.Send(ack)
+		send(ack)
 	default:
-		ev.Session().Send(&protocol.LoginAck{
-			Header: &protocol.AckHeader{
-				Code: 1,
-				Msg:  "success",
-				Mid:  10,
-			},
-			Token: "sadsfasf",
-		})
-		fmt.Println("unkown message", msg)
+
+		log.Warn("unkown message", msg)
 	}
+	return nil
 }

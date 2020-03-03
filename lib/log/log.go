@@ -23,7 +23,7 @@ func Init(lg Logger) {
 	logger = lg
 }
 
-func Panic(format string, args ...interface{}) {
+func Panicf(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
 	}
@@ -33,7 +33,22 @@ func Panic(format string, args ...interface{}) {
 	}
 	logger.Panic(format, args...)
 }
-func Error(format string, args ...interface{}) {
+
+func Panic(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Panicf(format, args...)
+}
+
+func Errorf(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
 	}
@@ -43,7 +58,22 @@ func Error(format string, args ...interface{}) {
 	}
 	logger.Error(format, args...)
 }
-func Wran(format string, args ...interface{}) {
+
+func Error(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Errorf(format, args...)
+}
+
+func Warnf(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
 	}
@@ -53,7 +83,22 @@ func Wran(format string, args ...interface{}) {
 	}
 	logger.Wran(format, args...)
 }
-func Info(format string, args ...interface{}) {
+
+func Warn(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Warnf(format, args...)
+}
+
+func Infof(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
 	}
@@ -63,7 +108,21 @@ func Info(format string, args ...interface{}) {
 	}
 	logger.Info(format, args...)
 }
-func Debug(format string, args ...interface{}) {
+func Info(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Infof(format, args...)
+}
+
+func Debugf(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
 	}
@@ -72,4 +131,18 @@ func Debug(format string, args ...interface{}) {
 		return
 	}
 	logger.Debug(format, args...)
+}
+
+func Debug(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Debugf(format, args...)
 }

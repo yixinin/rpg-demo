@@ -36,6 +36,11 @@ func (s *App) Start() {
 		case sig := <-c:
 			switch sig {
 			case os.Interrupt:
+				for _, v := range s.hooks {
+					v.BeforShutdown()
+					v.Shutdown()
+					v.AfterShutdown()
+				}
 				os.Exit(0)
 			}
 		case <-s.stop:

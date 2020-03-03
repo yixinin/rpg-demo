@@ -2,6 +2,7 @@ package config
 
 import (
 	"io/ioutil"
+	"rpg-demo/lib/bus"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -11,6 +12,7 @@ type Config struct {
 	Grpc        string   `yaml:"grpc"` //监听地址 0.0.0.0:9999
 	Mysql       MysqlConfig
 	Redis       RedisConfig
+	Nats        *bus.Config
 }
 
 type MysqlConfig struct {

@@ -1,70 +1,28 @@
 version: "3"
 services:
-    gateway-1:
-        image: rpg
-        # container_name: gateway-1
-        command: /app/rpg -gateway
-    gateway-2:
-        image: rpg
-        # container_name: gateway-2
-        command: /app/rpg -gateway
-    center-1:
-        image: rpg
-        # container_name: center-1
-        command: /app/rpg -center
-    center-2:
-        image: rpg
-        # container_name: center-2
-        command: /app/rpg -center
-    game-1:
-        image: rpg
-        # container_name: game-1
-        command: /app/rpg -game
-    game-2:
-        image: rpg
-        # container_name: game-2
-        command: /app/rpg -game
     redis:
         image: redis
-        # container_name: redis-rpg
+        container_name: redis
         ports:
             - 6379:6379
         networks:
             - rpg
     mysql:
         image: mysql
-        # container_name: mysql-rpg
+        container_name: mysql
         ports:
             - 3306:3306
         networks:
             - rpg
         environment: #添加环境变量
             MYSQL_ROOT_PASSWORD: 123456
-            MYSQL_USER: root
-            MYSQL_PASSWORD: 123456
-    etcd-1:
-        image: elcolio/etcd
-        # container_name: etcd-1
+            # MYSQL_USER: root
+            # MYSQL_PASSWORD: 123456
+    etcd:
+        image: xieyanze/etcd3
+        container_name: etcd
         ports:
-            - 2279:2379
-        expose:
-            - 2380
-        networks:
-            - rpg
-    etcd-2:
-        image: elcolio/etcd
-        # container_name: etcd-2
-        ports:
-            - 2479:2379
-        expose:
-            - 2380
-        networks:
-            - rpg
-    etcd-3:
-        image: elcolio/etcd
-        # container_name: etcd-3
-        ports:
-            - 2579:2379
+            - 2379:2379
         expose:
             - 2380
         networks:
@@ -72,3 +30,5 @@ services:
 networks:
     rpg:
         driver: bridge
+
+        
