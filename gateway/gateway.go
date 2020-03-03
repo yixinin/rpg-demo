@@ -1,6 +1,7 @@
 package main
 
 import (
+	"rpg-demo/lib/bus"
 	"rpg-demo/lib/log"
 
 	"github.com/davyxu/cellnet"
@@ -20,6 +21,7 @@ type Gateway struct {
 
 	centerCh chan *GrpcConn
 	gameCh   chan *GrpcConn
+	nats     bus.Bus
 }
 
 func NewGateway() *Gateway {
