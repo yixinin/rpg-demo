@@ -48,6 +48,31 @@ func Panic(args ...interface{}) {
 	Panicf(format, args...)
 }
 
+func Faltal(args ...interface{}) {
+	if len(args) == 0 {
+		return
+	}
+	var format string
+	if s, ok := args[0].(string); ok {
+		format = s
+		args = args[1:]
+	} else {
+		format = "debug info: %v"
+	}
+	Faltalf(format, args...)
+}
+
+func Faltalf(format string, args ...interface{}) {
+	if !strings.HasSuffix(format, "\n") {
+		format += "\n"
+	}
+	if logger == nil {
+		fmt.Printf(format, args...)
+		return
+	}
+	logger.Panic(format, args...)
+}
+
 func Errorf(format string, args ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"

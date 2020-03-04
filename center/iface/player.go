@@ -1,4 +1,4 @@
-package intface
+package iface
 
 type Player interface {
 	GetPlayerId() int64

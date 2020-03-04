@@ -2,15 +2,18 @@ package db
 
 import (
 	"fmt"
-	"rpg-demo/config"
 
 	"github.com/go-redis/redis/v7"
 )
 
+type RedisConfig struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
+}
+
 var Redis *redis.Client
 
-func InitRedis() {
-	var conf = config.DefaultConfig.Redis
+func InitRedis(conf *RedisConfig) {
 	Redis = redis.NewClient(&redis.Options{
 		Addr: fmt.Sprintf("%s:%s", conf.Host, conf.Port),
 		// Password: conf., // no password set

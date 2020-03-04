@@ -1,4 +1,4 @@
-package intface
+package iface
 
 type Room interface {
 	GetRoomId() int64
@@ -7,8 +7,8 @@ type Room interface {
 
 	GetPlayer(i int) int64
 	GetPlayers() []int64
-	GetRealPlayers() []int64
-	GetRobots() []int64
+	// GetRealPlayers() []int64
+	// GetRobots() []int64
 
 	JoinRoom(p int64) error
 	ExitRoom(p int64) error

@@ -64,7 +64,7 @@ func GetServiceInfo(ev *clientv3.Event) *ServiceInfo {
 }
 
 func (m *Master) WatchNodes() {
-	resp, err := m.Client.KV.Get(context.TODO(), "services/", clientv3.WithFirstKey()...)
+	resp, err := m.Client.KV.Get(context.TODO(), m.Path, clientv3.WithFirstKey()...)
 	if err != nil {
 		log.Error("get keys error:%v", err)
 	}
@@ -73,7 +73,7 @@ func (m *Master) WatchNodes() {
 		json.Unmarshal(v.Value, &info)
 		m.AddNode(string(v.Key), &info)
 	}
-	rch := m.Client.Watch(context.Background(), m.Path, clientv3.WithPrefix())
+	rch := m.Client.Watch(context.TODO(), m.Path, clientv3.WithPrefix())
 	for wresp := range rch {
 		for _, ev := range wresp.Events {
 			switch ev.Type {

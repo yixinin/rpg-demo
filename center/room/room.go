@@ -2,8 +2,6 @@ package room
 
 import (
 	"errors"
-	"rpg-demo/center/player"
-	"rpg-demo/center/server"
 	"rpg-demo/enums"
 )
 
@@ -73,26 +71,7 @@ func (r *DDZRoom) GetPlayer(i int) int64 {
 func (r *DDZRoom) GetPlayers() []int64 {
 	return r.Players
 }
-func (r *DDZRoom) GetRealPlayers() []int64 {
-	var ps = make([]int64, 0, 4)
-	for _, v := range r.Players {
-		p := server.Server.Players[v]
-		if _, ok := p.(*player.User); ok {
-			ps = append(ps, p.GetPlayerId())
-		}
-	}
-	return ps
-}
-func (r *DDZRoom) GetRobots() []int64 {
-	var ps = make([]int64, 0, 4)
-	for _, v := range r.Players {
-		p := server.Server.Players[v]
-		if _, ok := p.(*player.Robot); ok {
-			ps = append(ps, p.GetPlayerId())
-		}
-	}
-	return ps
-}
+
 func (r *DDZRoom) JoinRoom(p int64) error {
 	if r.GetIsFull() {
 		return errors.New("is full")

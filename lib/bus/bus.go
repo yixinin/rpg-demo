@@ -19,22 +19,6 @@ type Bus struct {
 	nats *nats.Conn
 }
 
-type Mesg struct {
-	nats *nats.Msg
-	pm   interface{}
-}
-
-type Subscription struct {
-	nats *nats.Subscription
-}
-
-func (m *Mesg) PbMesg() interface{} {
-	return m.pm
-}
-
-type MesgHandler func(*Mesg)
-type NewProtoMesg func() interface{}
-
 func NewBus(cfg *Config) (*Bus, error) {
 	conn, err := nats.Connect(cfg.Addr,
 		nats.MaxReconnects(-1), // always reconnect
@@ -79,66 +63,42 @@ func (b *Bus) Request(topic string, req proto.Message, resp interface{}) error {
 
 // 普通订阅
 // 针对某一subject，所有订阅者都收到一份消息
-func (b *Bus) Subscribe(topic string, nc NewProtoMesg, cb MesgHandler) (*Subscription, error) {
-	s, err := b.nats.Subscribe(topic, func(m *nats.Msg) {
-		pm := nc()
-		if err := proto.Unmarshal(m.Data, pm.(proto.Message)); err != nil {
-			log.Error("Subscription receive data unmarshal error: %v", err)
-			return
-		} else {
-			cb(&Mesg{nats: m, pm: pm})
-		}
-	})
+func (b *Bus) Subscribe(topic string, handler func(m *nats.Msg)) (*nats.Subscription, error) {
+	s, err := b.nats.Subscribe(topic, handler)
 
-	if err != nil {
-		return nil, err
-	} else {
-		return &Subscription{
-			nats: s,
-		}, nil
-	}
+	return s, err
 }
 
 // 队列订阅
 // 针对某一subject，所有订阅者只有一个收到消息
 // 目前固定queue group名称为default，假设针对某一subject只会需要一个queue grup
-func (b *Bus) QueueSubscribe(topic string, nc NewProtoMesg, cb MesgHandler) (*Subscription, error) {
-	s, err := b.nats.QueueSubscribe(topic, "default", func(m *nats.Msg) {
-		pm := nc()
-		if err := proto.Unmarshal(m.Data, pm.(proto.Message)); err != nil {
-			log.Error("Subscription receive data unmarshal error: %v", err)
-			return
-		} else {
-			cb(&Mesg{nats: m, pm: pm})
-		}
-	})
+func (b *Bus) QueueSubscribe(topic string, handler func(m *nats.Msg)) (*nats.Subscription, error) {
+	s, err := b.nats.QueueSubscribe(topic, "default", handler)
 
-	if err != nil {
-		return nil, err
-	} else {
-		return &Subscription{
-			nats: s,
-		}, nil
-	}
+	return s, err
 }
 
-func (b *Bus) Publish(topic string, msg interface{}) error {
+func (b *Bus) Publish(subject string, msg interface{}) error {
 	if data, err := proto.Marshal(msg.(proto.Message)); err != nil {
 		return err
 	} else {
-		return b.nats.Publish(topic, data)
+		return b.nats.Publish(subject, data)
 	}
 
 }
 
-func (b *Bus) Reply(m interface{}, to *Mesg) error {
-	if data, err := proto.Marshal(m.(proto.Message)); err != nil {
+func (b *Bus) Reply(subject string, msg proto.Message) error {
+	if data, err := proto.Marshal(msg); err != nil {
 		return err
 	} else {
-		return b.nats.Publish(to.nats.Reply, data)
+		return b.nats.Publish(subject, data)
 	}
 }
 
 func (b *Bus) GetNats() *nats.Conn {
 	return b.nats
+}
+
+func (b *Bus) Shutdown() {
+	b.nats.Close()
 }

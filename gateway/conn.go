@@ -2,8 +2,10 @@ package main
 
 import (
 	"errors"
+	"rpg-demo/cache"
 	"rpg-demo/db"
 	"rpg-demo/protocol"
+	"strconv"
 	"sync"
 
 	"github.com/davyxu/cellnet"
@@ -43,9 +45,6 @@ func NewServer() *Server {
 func (s *Server) Add(conn *Connection) error {
 	s.Lock()
 	defer s.Unlock()
-	if _, ok := s.connMap[conn.Uid]; ok {
-		return RepeatConn
-	}
 	s.connMap[conn.Uid] = conn
 	s.sessMap[conn.sess.ID()] = conn.Uid
 	s.tokenMap[conn.Token] = conn.Uid
@@ -53,13 +52,11 @@ func (s *Server) Add(conn *Connection) error {
 }
 
 func (s *Server) DelConn(conn *Connection) error {
-	s.Lock()
-	defer s.Unlock()
-	if _, ok := s.connMap[conn.Uid]; ok {
-		delete(s.connMap, conn.Uid)
-		delete(s.sessMap, conn.sess.ID())
-		delete(s.tokenMap, conn.Token)
-		return nil
+	return s.Del(conn.Uid)
+}
+func (s *Server) DelSess(sessid int64) error {
+	if uid, ok := s.sessMap[sessid]; ok {
+		return s.Del(uid)
 	}
 	return ConnNotExist
 }
@@ -68,6 +65,9 @@ func (s *Server) Del(uid int64) error {
 	s.Lock()
 	defer s.Unlock()
 	if conn, ok := s.connMap[uid]; ok {
+		if conn.sess != nil {
+			conn.sess.Close()
+		}
 		delete(s.connMap, uid)
 		delete(s.sessMap, conn.sess.ID())
 		delete(s.tokenMap, conn.Token)
@@ -76,13 +76,13 @@ func (s *Server) Del(uid int64) error {
 	return ConnNotExist
 }
 
-func (s *Server) Replace(conn *Connection) {
-	s.Lock()
-	defer s.Unlock()
-	s.connMap[conn.Uid] = conn
-	s.sessMap[conn.sess.ID()] = conn.Uid
-	s.tokenMap[conn.Token] = conn.Uid
-}
+// func (s *Server) Replace(conn *Connection) {
+// 	s.Lock()
+// 	defer s.Unlock()
+// 	s.connMap[conn.Uid] = conn
+// 	s.sessMap[conn.sess.ID()] = conn.Uid
+// 	s.tokenMap[conn.Token] = conn.Uid
+// }
 
 func (s *Server) Get(uid int64) (*Connection, bool) {
 	s.RLock()
@@ -152,7 +152,7 @@ func (s *Server) GetUid(token string) int64 {
 	return conn.Uid
 }
 
-var tokenPrefix = "user:token:"
+const tokenPrefix = "user:token:"
 
 func (s *Server) CheckUser(header *protocol.ReqHeader) (bool, error) {
 	s.Lock()
@@ -160,13 +160,38 @@ func (s *Server) CheckUser(header *protocol.ReqHeader) (bool, error) {
 
 	if uid, ok := s.tokenMap[header.Token]; ok {
 		header.Uid = uid
-		return true, nil
+		return uid != 0, nil
 	}
 
-	userId, err := db.Redis.Get(tokenPrefix + header.Token).Int64()
+	userid, err := db.Redis.Get(tokenPrefix + header.Token).Result()
 	if err != nil {
 		return false, err
 	}
-	header.Uid = userId
-	return true, err
+	uid, _ := strconv.ParseInt(userid, 10, 64)
+
+	return uid != 0, err
+}
+
+func (s *Server) GetCenter(uid int64) (string, error) {
+	if uid == 0 {
+		return "", errors.New("invalid uid")
+	}
+	if v, ok := s.connMap[uid]; ok {
+		if v.CenterIP != "" {
+			return v.CenterIP, nil
+		}
+	}
+	return cache.GetUserService(uid, "center")
+}
+
+func (s *Server) GetGame(uid int64) (string, error) {
+	if uid == 0 {
+		return "", errors.New("invalid uid")
+	}
+	if v, ok := s.connMap[uid]; ok {
+		if v.GameIP != "" {
+			return v.GameIP, nil
+		}
+	}
+	return cache.GetUserService(uid, "game")
 }

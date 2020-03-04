@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 	"errors"
-	"fmt"
-	"rpg-demo/center/intface"
+	"rpg-demo/cache"
+	"rpg-demo/center/iface"
 	"rpg-demo/center/models"
 	"rpg-demo/center/player"
 	"rpg-demo/center/room"
@@ -13,13 +13,13 @@ import (
 	"rpg-demo/lib/log"
 	"rpg-demo/protocol"
 	"rpg-demo/utils"
-	"strconv"
 	"time"
 
 	"github.com/go-xorm/xorm"
 )
 
 type Center4Gate struct {
+	Center *server.Center
 }
 
 func (u *Center4Gate) CreateAccount(user *models.User) error {
@@ -98,15 +98,20 @@ func (u *Center4Gate) Login(ctx context.Context, req *protocol.LoginReq) (ack *p
 	ack.Header.Uid = user.Id
 
 	//缓存
-	err = db.Redis.Set(fmt.Sprintf("user:token:%s", token), strconv.FormatInt(user.Id, 10), 30*time.Minute).Err()
+	err = cache.SetToken(user.Id, token)
 	if err != nil {
 		log.Error("set token error:%v", err)
 	}
+	err = cache.SetUserService(user.Id)
+	if err != nil {
+		log.Error("set user service error:%v", err)
+	}
+
 	log.Info("login success! token:%s", token)
 	//添加到players
 	//获取用户资产
 	var account = new(models.Account)
-	server.Server.AddPlayer(&player.User{
+	u.Center.AddPlayer(&player.User{
 		UserId:   user.Id,
 		NickName: user.NickName,
 		Avatar:   user.Avatar,
@@ -117,18 +122,28 @@ func (u *Center4Gate) Login(ctx context.Context, req *protocol.LoginReq) (ack *p
 }
 
 func (u *Center4Gate) Logout(ctx context.Context, req *protocol.LogoutReq) (*protocol.LogoutAck, error) {
-	server.Server.RemovePlayer(req.Header.Uid)
+	u.Center.RemovePlayer(req.Header.Uid)
 	return &protocol.LogoutAck{}, nil
 }
 
 //重连
-func (u *Center4Gate) ReConnect(context.Context, *protocol.ReConnecReq) (*protocol.CallAck, error) {
+func (u *Center4Gate) ReConnect(ctx context.Context, req *protocol.ReConnecReq) (*protocol.CallAck, error) {
 	return nil, nil
 }
 
 //踢下线
-func (u *Center4Gate) KickUser(context.Context, *protocol.KickUserReq) (*protocol.CallAck, error) {
+func (u *Center4Gate) KickUser(ctx context.Context, req *protocol.KickUserReq) (*protocol.CallAck, error) {
 	return nil, nil
+}
+
+//------------------ 上分/下分 -----------------------
+
+func (u *Center4Gate) Topup(ctx context.Context) {
+
+}
+
+func (u *Center4Gate) Withdraw(ctx context.Context) {
+
 }
 
 //------------------ Room 房间 -----------------------
@@ -169,11 +184,11 @@ func (u *Center4Gate) GetGameRoomTypeList(ctx context.Context, req *protocol.Get
 }
 func (u *Center4Gate) EnterGame(ctx context.Context, req *protocol.EnterGameReq) (*protocol.EnterGameRep, error) {
 	var ack = &protocol.EnterGameRep{}
-	var r intface.Room
+	var r iface.Room
 	switch req.GameId {
 	case room.DDZGameId:
 		//查找有无可用房间
-		if v1, ok := server.Server.Games[req.GameId]; ok {
+		if v1, ok := u.Center.Games[req.GameId]; ok {
 			if v2, ok := v1[req.GameType]; ok {
 				for _, v := range v2 {
 					if !v.GetIsFull() {
@@ -184,7 +199,7 @@ func (u *Center4Gate) EnterGame(ctx context.Context, req *protocol.EnterGameReq)
 			}
 		}
 		r = room.CreateDDZRoom(req.Header.Uid, req.GameType, "")
-		server.Server.CreateRoom(r)
+		u.Center.CreateRoom(r)
 	}
 	if r == nil {
 		return ack, errors.New("enter game fail")
@@ -193,7 +208,7 @@ func (u *Center4Gate) EnterGame(ctx context.Context, req *protocol.EnterGameReq)
 	if err != nil {
 		return ack, err
 	}
-	server.Server.Players[req.Header.Uid].SetRoom(r.GetRoomId())
+	u.Center.Players[req.Header.Uid].SetRoom(r.GetRoomId())
 	return ack, nil
 }
 func (u *Center4Gate) ExitGame(context.Context, *protocol.ExitGameReq) (*protocol.ExitGameAck, error) {

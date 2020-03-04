@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"rpg-demo/lib/log"
+	"rpg-demo/utils"
 	"time"
 
 	"go.etcd.io/etcd/clientv3"
@@ -68,15 +70,11 @@ func (s *Service) Start() error {
 	}
 }
 
-func (s *Service) Stop() {
-	s.stop <- nil
-}
-
 func (s *Service) keepAlive() (<-chan *clientv3.LeaseKeepAliveResponse, error) {
 
 	info := &s.Info
 
-	key := "services/" + s.Name
+	key := fmt.Sprintf("rpg/%s/%s", s.Name, utils.RandStr(10))
 	value, _ := json.Marshal(info)
 
 	// minimum lease TTL is 5-second
@@ -104,4 +102,8 @@ func (s *Service) revoke() error {
 	}
 	log.Info("servide:%s stop\n", s.Name)
 	return err
+}
+
+func (s *Service) Shutdown() {
+	s.stop <- nil
 }

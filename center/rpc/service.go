@@ -5,14 +5,14 @@ import (
 	"log"
 	"net"
 	"rpg-demo/center/logic"
-	"rpg-demo/config"
+	"rpg-demo/center/server"
 	"rpg-demo/protocol"
 
 	"google.golang.org/grpc"
 )
 
-func StartGrpcService() {
-	var addr = fmt.Sprintf("0.0.0.0:%s", config.DefaultConfig.Grpc)
+func StartGrpcService(address string, center *server.Center) {
+	var addr = fmt.Sprintf("0.0.0.0:%s", address)
 	lis, err := net.Listen("tcp", addr)
 
 	if err != nil {
@@ -20,7 +20,7 @@ func StartGrpcService() {
 	}
 
 	s := grpc.NewServer()
-	protocol.RegisterCenter4GateServiceServer(s, &logic.Center4Gate{})
+	protocol.RegisterCenter4GateServiceServer(s, &logic.Center4Gate{Center: center})
 	log.Println("rpc服务已经开启")
 	s.Serve(lis)
 }

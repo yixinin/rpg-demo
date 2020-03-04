@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"rpg-demo/lib/etcd"
@@ -14,34 +14,33 @@ func Watch() {
 }
 
 type GrpcPool struct {
-	centers map[string]*grpc.ClientConn
-	games   map[string]*grpc.ClientConn
-	etcd    []string
-	stop    chan bool
+	gateways map[string]*grpc.ClientConn
+	games    map[string]*grpc.ClientConn
+	etcd     []string
+	stop     chan bool
 }
 
 type GrpcInfo struct {
-	IP string
-
+	IP   string
 	Conn *grpc.ClientConn
 }
 
 func NewGrpcPool(etcd []string) *GrpcPool {
 	return &GrpcPool{
-		centers: make(map[string]*grpc.ClientConn, 3),
-		games:   make(map[string]*grpc.ClientConn, 3),
-		etcd:    etcd,
+		gateways: make(map[string]*grpc.ClientConn, 3),
+		games:    make(map[string]*grpc.ClientConn, 3),
+		etcd:     etcd,
 	}
 }
 
-func (s *GrpcPool) GetCenter(ip ...string) *GrpcInfo {
+func (s *GrpcPool) GetGateway(ip ...string) *GrpcInfo {
 	if len(ip) == 1 {
 		return &GrpcInfo{
 			IP:   ip[0],
-			Conn: s.centers[ip[0]],
+			Conn: s.gateways[ip[0]],
 		}
 	}
-	for k, v := range s.centers {
+	for k, v := range s.gateways {
 		return &GrpcInfo{
 			IP:   k,
 			Conn: v,
@@ -50,8 +49,8 @@ func (s *GrpcPool) GetCenter(ip ...string) *GrpcInfo {
 	return nil
 }
 
-func (s *GrpcPool) Center(ip string) *grpc.ClientConn {
-	v, _ := s.centers[ip]
+func (s *GrpcPool) Gateway(ip string) *grpc.ClientConn {
+	v, _ := s.gateways[ip]
 	return v
 }
 func (s *GrpcPool) Game(ip string) *grpc.ClientConn {
@@ -77,13 +76,13 @@ func (s *GrpcPool) ListenGrpc() {
 			}
 			ips = append(ips, v.Info.IP)
 			switch ks[1] {
-			case "center":
-				if _, ok := s.centers[v.Info.IP]; !ok {
+			case "gateway":
+				if _, ok := s.gateways[v.Info.IP]; !ok {
 					conn, err := grpc.Dial(v.Info.IP, grpc.WithInsecure())
 					if err != nil {
 						log.Error("err:%v", err)
 					}
-					s.centers[v.Info.IP] = conn
+					s.gateways[v.Info.IP] = conn
 				}
 			case "game":
 				if _, ok := s.games[v.Info.IP]; !ok {
@@ -109,7 +108,7 @@ func (s *GrpcPool) ListenGrpc() {
 }
 
 func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
-	for k := range s.centers {
+	for k := range s.gateways {
 		var use = false
 		for _, ip := range ips {
 			if k == ip {
@@ -119,8 +118,8 @@ func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
 		}
 		// 断开连接
 		if !use {
-			s.centers[k].Close()
-			delete(s.centers, k)
+			s.gateways[k].Close()
+			delete(s.gateways, k)
 		}
 	}
 	for k := range s.games {
@@ -130,7 +129,7 @@ func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
 			}
 		}
 		// 断开连接
-		s.centers[k].Close()
+		s.gateways[k].Close()
 		delete(s.games, k)
 	}
 }

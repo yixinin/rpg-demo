@@ -6,9 +6,9 @@ import (
 )
 
 type ShutdownHooker interface {
-	BeforShutdown()
+	// BeforShutdown()
 	Shutdown()
-	AfterShutdown()
+	// AfterShutdown()
 }
 
 type App struct {
@@ -37,9 +37,9 @@ func (s *App) Start() {
 			switch sig {
 			case os.Interrupt:
 				for _, v := range s.hooks {
-					v.BeforShutdown()
+					// v.BeforShutdown()
 					v.Shutdown()
-					v.AfterShutdown()
+					// v.AfterShutdown()
 				}
 				os.Exit(0)
 			}

@@ -3,10 +3,20 @@ package protocol;
 import "header.proto";
 
 //上分
-message UpCoinReq {
+message TopupReq {
     ReqHeader header = 1;
+    int64     value  = 2;
 }
 
-message DownCoinAck {
-    AckHeader header = 1;
+message TopupAck {
+    AckHeader header  = 1;
+    string    orderNo = 2;
+}
+message WithdrawReq {
+    ReqHeader header = 1;
+    int64     value  = 2;
+}
+message WithdrawAck {
+    AckHeader header  = 1;
+    string    orderNo = 2;
 }
