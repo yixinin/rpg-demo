@@ -21,6 +21,10 @@ func StartGrpcService(address string, center *server.Center) {
 
 	s := grpc.NewServer()
 	protocol.RegisterCenter4GateServiceServer(s, &logic.Center4Gate{Center: center})
-	log.Println("rpc服务已经开启")
 	s.Serve(lis)
+	if err != nil {
+		log.Fatal("listen grpc service error", err)
+		return
+	}
+	log.Println("rpc服务已经开启")
 }

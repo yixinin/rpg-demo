@@ -1,9 +1,12 @@
 package config
 
 import (
+	"fmt"
 	"io/ioutil"
 	"rpg-demo/db"
+	"rpg-demo/ip"
 	"rpg-demo/lib/bus"
+	"rpg-demo/utils"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -25,6 +28,7 @@ func ParseConfig(path string) (*Config, error) {
 	}
 	var conf Config
 	err = yaml.Unmarshal(yamlFile, &conf)
+	ip.ServerIP = fmt.Sprintf("%s:%s", utils.IPAddress(), conf.Grpc)
 
 	return &conf, err
 }

@@ -2,7 +2,8 @@ go.sum
 rpg-demo*
 *debug*
 .vscode
-center/center*
-gateway/gateway*
-game/game*
-game/ddz/ddz*
+*.exe
+center/center
+gateway/gateway
+game/game 
+game/ddz/ddz

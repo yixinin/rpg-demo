@@ -9,10 +9,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-func Watch() {
-
-}
-
 type GrpcPool struct {
 	centers map[string]*grpc.ClientConn
 	games   map[string]*grpc.ClientConn

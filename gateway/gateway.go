@@ -54,10 +54,8 @@ func NewGateway(conf *config.Config) *Gateway {
 	return &Gateway{
 		server: NewServer(),
 		grpc:   NewGrpcPool(conf.Etcd),
-		// cc:     make(chan *GrpcInfo),
-		// gc:     make(chan *GrpcInfo),
-		nats: n,
-		etcd: e,
+		nats:   n,
+		etcd:   e,
 	}
 }
 

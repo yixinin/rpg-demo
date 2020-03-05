@@ -3,46 +3,41 @@ package server
 import (
 	"rpg-demo/lib/etcd"
 	"rpg-demo/lib/log"
-	"strconv"
 	"strings"
 	"time"
 
 	"google.golang.org/grpc"
 )
 
-func Watch() {
-
-}
-
 type GrpcPool struct {
-	gateways map[string]*grpc.ClientConn
-	games    map[string]*grpc.ClientConn
-	game     map[int32][]string //gameid->servers
-	etcd     []string
+	Centers  map[string]*grpc.ClientConn
+	Gateways map[string]*grpc.ClientConn
+	Etcd     []string
 	stop     chan bool
 }
 
 type GrpcInfo struct {
-	IP   string
+	IP string
+
 	Conn *grpc.ClientConn
 }
 
 func NewGrpcPool(etcd []string) *GrpcPool {
 	return &GrpcPool{
-		gateways: make(map[string]*grpc.ClientConn, 3),
-		games:    make(map[string]*grpc.ClientConn, 3),
-		etcd:     etcd,
+		Centers:  make(map[string]*grpc.ClientConn, 3),
+		Gateways: make(map[string]*grpc.ClientConn, 3),
+		Etcd:     etcd,
 	}
 }
 
-func (s *GrpcPool) GetGateway(ip ...string) *GrpcInfo {
+func (s *GrpcPool) GetCenter(ip ...string) *GrpcInfo {
 	if len(ip) == 1 {
 		return &GrpcInfo{
 			IP:   ip[0],
-			Conn: s.gateways[ip[0]],
+			Conn: s.Centers[ip[0]],
 		}
 	}
-	for k, v := range s.gateways {
+	for k, v := range s.Centers {
 		return &GrpcInfo{
 			IP:   k,
 			Conn: v,
@@ -51,18 +46,18 @@ func (s *GrpcPool) GetGateway(ip ...string) *GrpcInfo {
 	return nil
 }
 
-func (s *GrpcPool) Gateway(ip string) *grpc.ClientConn {
-	v, _ := s.gateways[ip]
+func (s *GrpcPool) Center(ip string) *grpc.ClientConn {
+	v, _ := s.Centers[ip]
 	return v
 }
-func (s *GrpcPool) Game(ip string) *grpc.ClientConn {
-	v, _ := s.games[ip]
+func (s *GrpcPool) Gateway(ip string) *grpc.ClientConn {
+	v, _ := s.Gateways[ip]
 	return v
 }
 
 //ListenGrpc go s.ListenGrpc()
 func (s *GrpcPool) ListenGrpc() {
-	m, err := etcd.NewMaster(s.etcd, "rpg/")
+	m, err := etcd.NewMaster(s.Etcd, "rpg/")
 
 	if err != nil {
 		log.Error("err:%v", err)
@@ -78,32 +73,21 @@ func (s *GrpcPool) ListenGrpc() {
 			}
 			ips = append(ips, v.Info.IP)
 			switch ks[1] {
-			case "gateway":
-				if _, ok := s.gateways[v.Info.IP]; !ok {
+			case "center":
+				if _, ok := s.Centers[v.Info.IP]; !ok {
 					conn, err := grpc.Dial(v.Info.IP, grpc.WithInsecure())
 					if err != nil {
 						log.Error("err:%v", err)
 					}
-					s.gateways[v.Info.IP] = conn
+					s.Centers[v.Info.IP] = conn
 				}
-			case "game":
-
-				if _, ok := s.games[v.Info.IP]; !ok {
+			case "gateway":
+				if _, ok := s.Gateways[v.Info.IP]; !ok {
 					conn, err := grpc.Dial(v.Info.IP, grpc.WithInsecure())
 					if err != nil {
 						log.Error("err:%v", err)
 					}
-					s.games[v.Info.IP] = conn
-					if len(ks) >= 3 {
-						gameid, err := strconv.ParseInt(ks[2], 10.32)
-						if err == nil {
-							if _, ok := s.game[gameid]; !ok {
-								s.game[gameid] = []string{v.Info.IP}
-							} else {
-								s.game[gameid] = append(s.game[gameid], v.Info.IP)
-							}
-						}
-					}
+					s.Gateways[v.Info.IP] = conn
 				}
 			}
 		}
@@ -121,7 +105,7 @@ func (s *GrpcPool) ListenGrpc() {
 }
 
 func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
-	for k := range s.gateways {
+	for k := range s.Centers {
 		var use = false
 		for _, ip := range ips {
 			if k == ip {
@@ -131,31 +115,20 @@ func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
 		}
 		// 断开连接
 		if !use {
-			s.gateways[k].Close()
-			delete(s.gateways, k)
+			s.Centers[k].Close()
+			delete(s.Centers, k)
 		}
 	}
-	for k := range s.games {
+	for k := range s.Gateways {
 		for _, ip := range ips {
 			if k == ip {
 				continue
 			}
 		}
 		// 断开连接
-		s.gateways[k].Close()
-		delete(s.games, k)
-		//删除游戏节点
-		for k1, v1 := range s.game {
-			keeps := make([]string, 0, len(v1))
-			for i, node := range v1 {
-				if ip != node {
-					keeps = append(keeps, node)
-				}
-			}
-			s.game[k1] = keeps
-		}
+		s.Centers[k].Close()
+		delete(s.Gateways, k)
 	}
-
 }
 
 func (s *GrpcPool) Shutdown() {

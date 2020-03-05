@@ -1,30 +1,85 @@
 package card
 
+import (
+	"fmt"
+	"strconv"
+)
+
 type Card uint8 // 0=癞子
 type Color uint8
 type Value uint8
 
 const (
-	Spade   = 0x40 // 黑桃 ♠
-	Heart   = 0x30 // 红桃 ♥
-	Clubs   = 0x20 // 梅花 ♣
 	Diamond = 0x10 // 方块 ♦
+	Club    = 0x20 // 梅花 ♣
+	Heart   = 0x30 // 红桃 ♥
+	Spade   = 0x40 // 黑桃 ♠
+
+	DiamondAny = 0xa0 // 癞子方块 ♦
+	ClubAny    = 0xb0 // 癞子梅花 ♣
+	HeartAny   = 0xc0 // 癞子红桃 ♥
+	SpadeAny   = 0xd0 // 癞子黑桃 ♠
+
+	YungJoker = 0x50 //小王
+	OldJoker  = 0x60 //大王
 )
 
-func GetCard() []Card {
-	return []Card{
-		0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, //方块 ♦
-		0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, //梅花 ♣
-		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, //红桃 ♥
-		0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, //黑桃 ♠ A,1,2,3,4,5,6,7,8,9,10,J,Q,K
-		0x0f, 0xff, //小🃏, 大🃏
+func (c Color) String() string {
+	switch c {
+	case Spade:
+		return "♠"
+	case Heart:
+		return "♥"
+	case Club:
+		return "♣"
+	case Diamond:
+		return "♦"
+
+	case YungJoker:
+		return "小"
+	case OldJoker:
+		return "大"
+
+	case SpadeAny:
+		return "癞子♠"
+	case HeartAny:
+		return "癞子♥"
+	case ClubAny:
+		return "癞子♣"
+	case DiamondAny:
+		return "癞子♦"
 	}
+
+	return "*"
+}
+
+func (c Value) String() string {
+	switch c {
+	case 0x01:
+		return "A"
+	case 0x0a:
+		return "10"
+	case 0x0b:
+		return "J"
+	case 0x0c:
+		return "Q"
+	case 0x0d:
+		return "K"
+	case 0x0e:
+		return "🃏"
+
+	}
+	return strconv.FormatUint(uint64(c), 10)
+}
+
+func (c Card) String() string {
+	return fmt.Sprintf("%s%s", c.GetColor().String(), c.GetValue().String())
 }
 
 func (c Card) GetColor() Color {
-
+	return Color(uint8(c) & 0xf0)
 }
 
 func (c Card) GetValue() Value {
-
+	return Value(uint8(c) & 0x0f)
 }

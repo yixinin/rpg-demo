@@ -1,12 +1,6 @@
-package main
+package ddz
 
-type Player interface {
-}
-
-type User struct {
-	UserId int64
-}
-
-type Robot struct {
-	RobotId int64
+type Player struct {
+	playerId int64
+	isRobot  bool
 }
