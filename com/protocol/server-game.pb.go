@@ -87,57 +87,49 @@ func (m *Player) GetCoin() int64 {
 	return 0
 }
 
-type StartGameReq struct {
-	RoomId               int64     `protobuf:"varint,1,opt,name=roomId,proto3" json:"roomId,omitempty"`
-	Players              []*Player `protobuf:"bytes,2,rep,name=players,proto3" json:"players,omitempty"`
-	RoundNo              string    `protobuf:"bytes,3,opt,name=roundNo,proto3" json:"roundNo,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
+type UpdateUserInfoReq struct {
+	NickName             string   `protobuf:"bytes,1,opt,name=nickName,proto3" json:"nickName,omitempty"`
+	Avatar               string   `protobuf:"bytes,2,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StartGameReq) Reset()         { *m = StartGameReq{} }
-func (m *StartGameReq) String() string { return proto.CompactTextString(m) }
-func (*StartGameReq) ProtoMessage()    {}
-func (*StartGameReq) Descriptor() ([]byte, []int) {
+func (m *UpdateUserInfoReq) Reset()         { *m = UpdateUserInfoReq{} }
+func (m *UpdateUserInfoReq) String() string { return proto.CompactTextString(m) }
+func (*UpdateUserInfoReq) ProtoMessage()    {}
+func (*UpdateUserInfoReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_84cbf3ce83a4d353, []int{1}
 }
 
-func (m *StartGameReq) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_StartGameReq.Unmarshal(m, b)
+func (m *UpdateUserInfoReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdateUserInfoReq.Unmarshal(m, b)
 }
-func (m *StartGameReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_StartGameReq.Marshal(b, m, deterministic)
+func (m *UpdateUserInfoReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdateUserInfoReq.Marshal(b, m, deterministic)
 }
-func (m *StartGameReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StartGameReq.Merge(m, src)
+func (m *UpdateUserInfoReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateUserInfoReq.Merge(m, src)
 }
-func (m *StartGameReq) XXX_Size() int {
-	return xxx_messageInfo_StartGameReq.Size(m)
+func (m *UpdateUserInfoReq) XXX_Size() int {
+	return xxx_messageInfo_UpdateUserInfoReq.Size(m)
 }
-func (m *StartGameReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_StartGameReq.DiscardUnknown(m)
+func (m *UpdateUserInfoReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateUserInfoReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StartGameReq proto.InternalMessageInfo
+var xxx_messageInfo_UpdateUserInfoReq proto.InternalMessageInfo
 
-func (m *StartGameReq) GetRoomId() int64 {
+func (m *UpdateUserInfoReq) GetNickName() string {
 	if m != nil {
-		return m.RoomId
+		return m.NickName
 	}
-	return 0
+	return ""
 }
 
-func (m *StartGameReq) GetPlayers() []*Player {
+func (m *UpdateUserInfoReq) GetAvatar() string {
 	if m != nil {
-		return m.Players
-	}
-	return nil
-}
-
-func (m *StartGameReq) GetRoundNo() string {
-	if m != nil {
-		return m.RoundNo
+		return m.Avatar
 	}
 	return ""
 }
@@ -267,40 +259,115 @@ func (m *AddPlayerReq) GetPlayer() *Player {
 	return nil
 }
 
+//进入游戏 展示房间列表
+type EnterGameReq struct {
+	GameId               int32    `protobuf:"varint,1,opt,name=gameId,proto3" json:"gameId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EnterGameReq) Reset()         { *m = EnterGameReq{} }
+func (m *EnterGameReq) String() string { return proto.CompactTextString(m) }
+func (*EnterGameReq) ProtoMessage()    {}
+func (*EnterGameReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_84cbf3ce83a4d353, []int{5}
+}
+
+func (m *EnterGameReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EnterGameReq.Unmarshal(m, b)
+}
+func (m *EnterGameReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EnterGameReq.Marshal(b, m, deterministic)
+}
+func (m *EnterGameReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnterGameReq.Merge(m, src)
+}
+func (m *EnterGameReq) XXX_Size() int {
+	return xxx_messageInfo_EnterGameReq.Size(m)
+}
+func (m *EnterGameReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_EnterGameReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EnterGameReq proto.InternalMessageInfo
+
+func (m *EnterGameReq) GetGameId() int32 {
+	if m != nil {
+		return m.GameId
+	}
+	return 0
+}
+
+type LeaveGameReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaveGameReq) Reset()         { *m = LeaveGameReq{} }
+func (m *LeaveGameReq) String() string { return proto.CompactTextString(m) }
+func (*LeaveGameReq) ProtoMessage()    {}
+func (*LeaveGameReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_84cbf3ce83a4d353, []int{6}
+}
+
+func (m *LeaveGameReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LeaveGameReq.Unmarshal(m, b)
+}
+func (m *LeaveGameReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LeaveGameReq.Marshal(b, m, deterministic)
+}
+func (m *LeaveGameReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaveGameReq.Merge(m, src)
+}
+func (m *LeaveGameReq) XXX_Size() int {
+	return xxx_messageInfo_LeaveGameReq.Size(m)
+}
+func (m *LeaveGameReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaveGameReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LeaveGameReq proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*Player)(nil), "protocol.Player")
-	proto.RegisterType((*StartGameReq)(nil), "protocol.StartGameReq")
+	proto.RegisterType((*UpdateUserInfoReq)(nil), "protocol.UpdateUserInfoReq")
 	proto.RegisterType((*CloseGameReq)(nil), "protocol.CloseGameReq")
 	proto.RegisterType((*AddCoinReq)(nil), "protocol.AddCoinReq")
 	proto.RegisterType((*AddPlayerReq)(nil), "protocol.AddPlayerReq")
+	proto.RegisterType((*EnterGameReq)(nil), "protocol.EnterGameReq")
+	proto.RegisterType((*LeaveGameReq)(nil), "protocol.LeaveGameReq")
 }
 
 func init() { proto.RegisterFile("server-game.proto", fileDescriptor_84cbf3ce83a4d353) }
 
 var fileDescriptor_84cbf3ce83a4d353 = []byte{
-	// 347 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0x4f, 0x6b, 0xf2, 0x40,
-	0x10, 0xc6, 0x5f, 0xa3, 0x44, 0x1d, 0x73, 0x78, 0x1d, 0x5a, 0x09, 0x39, 0x49, 0x0e, 0x25, 0x14,
-	0xea, 0xc1, 0x96, 0xe2, 0xa1, 0x17, 0xf1, 0x50, 0x4a, 0x41, 0x4a, 0xa4, 0x1f, 0x60, 0x9b, 0x1d,
-	0xda, 0xe0, 0x26, 0xab, 0x9b, 0x28, 0xf8, 0x91, 0xfa, 0x2d, 0x4b, 0x36, 0xff, 0xf6, 0xa0, 0xed,
-	0x29, 0xfb, 0xcc, 0xcc, 0x93, 0x79, 0xe6, 0x07, 0xe3, 0x8c, 0xd4, 0x91, 0xd4, 0xdd, 0x27, 0x4b,
-	0x68, 0xb6, 0x53, 0x32, 0x97, 0x38, 0xd0, 0x9f, 0x48, 0x0a, 0x6f, 0x74, 0x48, 0xe3, 0xfc, 0x54,
-	0x96, 0x3d, 0xe7, 0x8b, 0x18, 0x27, 0x55, 0x2a, 0x5f, 0x80, 0xfd, 0x26, 0xd8, 0x89, 0x14, 0x7a,
-	0x30, 0xd8, 0xe9, 0xd7, 0x0b, 0x77, 0x3b, 0xd3, 0x4e, 0xd0, 0x0d, 0x1b, 0x5d, 0xf4, 0xd2, 0x38,
-	0xda, 0xae, 0x59, 0x42, 0xae, 0x35, 0xed, 0x04, 0xc3, 0xb0, 0xd1, 0x38, 0x01, 0x9b, 0x1d, 0x59,
-	0xce, 0x94, 0xdb, 0xd5, 0x9d, 0x4a, 0x21, 0x42, 0x2f, 0x92, 0x71, 0xea, 0xf6, 0xf4, 0xbf, 0xf4,
-	0xdb, 0x17, 0xe0, 0x6c, 0x72, 0xa6, 0xf2, 0x67, 0x96, 0x50, 0x48, 0xfb, 0xc2, 0xab, 0xa4, 0x4c,
-	0x9a, 0x8d, 0x95, 0xc2, 0x5b, 0xe8, 0x97, 0xbb, 0x33, 0xd7, 0x9a, 0x76, 0x83, 0xd1, 0xfc, 0xff,
-	0xac, 0x3e, 0x66, 0x56, 0xc6, 0x0d, 0xeb, 0x01, 0x74, 0xa1, 0xaf, 0xe4, 0x21, 0xe5, 0x6b, 0x59,
-	0x05, 0xa8, 0xa5, 0x7f, 0x03, 0xce, 0x4a, 0xc8, 0x8c, 0xfe, 0xd8, 0xe6, 0x3f, 0x01, 0x2c, 0x39,
-	0x5f, 0xc9, 0x38, 0x2d, 0xa6, 0x7e, 0xe3, 0x50, 0xdf, 0x64, 0x19, 0x37, 0x2d, 0xc0, 0x59, 0x72,
-	0x5e, 0xa5, 0xa2, 0x3d, 0x06, 0x60, 0x97, 0xf3, 0xda, 0x7d, 0x2e, 0x7a, 0xd5, 0x9f, 0x7f, 0x5b,
-	0x30, 0x2a, 0xb2, 0x6d, 0x48, 0x1d, 0xe3, 0x88, 0xf0, 0x11, 0x06, 0xaf, 0x71, 0xb4, 0x7d, 0xcf,
-	0x48, 0xe1, 0x75, 0xeb, 0xaa, 0x6b, 0x21, 0xed, 0xbd, 0x71, 0x5b, 0x5e, 0x31, 0x21, 0x96, 0xd1,
-	0xd6, 0xff, 0x87, 0x0b, 0x18, 0x36, 0x54, 0x71, 0xd2, 0x4e, 0x98, 0xa8, 0x2f, 0x3a, 0x1b, 0x42,
-	0xa6, 0xd3, 0xc4, 0x76, 0xde, 0xf9, 0x00, 0xfd, 0x8a, 0x19, 0x5e, 0xb5, 0xfd, 0x16, 0xe3, 0xc5,
-	0x7d, 0x0d, 0x2b, 0x73, 0x9f, 0x09, 0xf0, 0xac, 0xf3, 0xc3, 0xd6, 0xb5, 0xfb, 0x9f, 0x00, 0x00,
-	0x00, 0xff, 0xff, 0xab, 0xea, 0x35, 0xea, 0xe8, 0x02, 0x00, 0x00,
+	// 377 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0x4d, 0x4f, 0xc2, 0x40,
+	0x10, 0xb5, 0x80, 0x15, 0x86, 0x86, 0xc8, 0x46, 0x49, 0x53, 0x2f, 0xa4, 0x07, 0xc3, 0x45, 0x0e,
+	0x68, 0x0c, 0x07, 0x2f, 0x48, 0x0c, 0x21, 0x1a, 0x63, 0x6a, 0xf8, 0x01, 0x6b, 0x3b, 0x6a, 0x43,
+	0xdb, 0x85, 0xa5, 0x36, 0xe1, 0x17, 0xf9, 0x37, 0x4d, 0xb7, 0xdb, 0xed, 0x12, 0xe9, 0x69, 0x77,
+	0x3e, 0xde, 0x9b, 0x79, 0xf3, 0xa0, 0xbf, 0x43, 0x9e, 0x21, 0xbf, 0xf9, 0xa2, 0x31, 0x8e, 0x37,
+	0x9c, 0xa5, 0x8c, 0xb4, 0xc5, 0xe3, 0xb3, 0xc8, 0xe9, 0xfe, 0x24, 0x61, 0xba, 0x2f, 0xd2, 0x8e,
+	0xf5, 0x8d, 0x34, 0x40, 0x5e, 0x44, 0x6e, 0x04, 0xe6, 0x5b, 0x44, 0xf7, 0xc8, 0x89, 0x03, 0xed,
+	0x8d, 0xf8, 0x2d, 0x03, 0xdb, 0x18, 0x1a, 0xa3, 0xa6, 0xa7, 0xe2, 0xbc, 0x96, 0x84, 0xfe, 0xfa,
+	0x95, 0xc6, 0x68, 0x37, 0x86, 0xc6, 0xa8, 0xe3, 0xa9, 0x98, 0x0c, 0xc0, 0xa4, 0x19, 0x4d, 0x29,
+	0xb7, 0x9b, 0xa2, 0x22, 0x23, 0x42, 0xa0, 0xe5, 0xb3, 0x30, 0xb1, 0x5b, 0x82, 0x4b, 0xfc, 0xdd,
+	0x05, 0xf4, 0x57, 0x9b, 0x80, 0xa6, 0xb8, 0xda, 0x21, 0x5f, 0x26, 0x9f, 0xcc, 0xc3, 0xed, 0x01,
+	0xb9, 0x51, 0x4b, 0xde, 0xd0, 0xc9, 0xdd, 0x6b, 0xb0, 0xe6, 0x11, 0xdb, 0xe1, 0x82, 0xc6, 0x98,
+	0x73, 0x0c, 0xc0, 0xe4, 0x8c, 0xc5, 0x6a, 0x75, 0x19, 0xb9, 0x0f, 0x00, 0xb3, 0x20, 0x98, 0xb3,
+	0x30, 0x91, 0x93, 0x6a, 0x25, 0x96, 0xeb, 0x36, 0xb4, 0x75, 0xa7, 0x60, 0xcd, 0x82, 0xa0, 0xb8,
+	0x4f, 0x8e, 0x1f, 0x81, 0x59, 0xf4, 0x0b, 0x74, 0x77, 0x72, 0x3e, 0x2e, 0x4f, 0x3c, 0x96, 0x4d,
+	0xb2, 0x9e, 0xef, 0xf7, 0x94, 0xa4, 0xc8, 0xb5, 0xfd, 0x72, 0x67, 0xe4, 0xdc, 0x53, 0x4f, 0x46,
+	0x6e, 0x0f, 0xac, 0x17, 0xa4, 0x59, 0xa9, 0x63, 0xf2, 0xdb, 0x84, 0x6e, 0xfe, 0x7f, 0x47, 0x9e,
+	0x85, 0x3e, 0x92, 0x7b, 0x68, 0x3f, 0x87, 0xfe, 0x3a, 0x3f, 0x17, 0xb9, 0xac, 0xa6, 0x95, 0x39,
+	0x0f, 0xb7, 0x4e, 0xbf, 0x4a, 0xcf, 0x69, 0x14, 0xcd, 0xfc, 0xb5, 0x7b, 0x42, 0x1e, 0xa1, 0x77,
+	0x78, 0x68, 0x72, 0x55, 0xb5, 0xfd, 0xb3, 0xe0, 0x38, 0xc7, 0x14, 0x3a, 0x4a, 0x03, 0x19, 0x54,
+	0x1d, 0xba, 0xb0, 0x5a, 0xa4, 0x52, 0xa5, 0x23, 0x75, 0xa9, 0xb5, 0x48, 0xe5, 0xab, 0x8e, 0xd4,
+	0xcd, 0x3e, 0x8e, 0xbc, 0x83, 0x33, 0xe9, 0x34, 0xb9, 0xa8, 0xea, 0x95, 0xf9, 0xb5, 0xf3, 0x94,
+	0xc3, 0xfa, 0x3c, 0xdd, 0xf6, 0xa3, 0xc8, 0x0f, 0x53, 0xe4, 0x6e, 0xff, 0x02, 0x00, 0x00, 0xff,
+	0xff, 0xbf, 0x26, 0xb2, 0x2d, 0x79, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -316,7 +383,9 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GameServiceClient interface {
 	KickUser(ctx context.Context, in *KickUserReq, opts ...grpc.CallOption) (*CallAck, error)
-	StartGame(ctx context.Context, in *StartGameReq, opts ...grpc.CallOption) (*CallAck, error)
+	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*CallAck, error)
+	EnterGame(ctx context.Context, in *EnterGameReq, opts ...grpc.CallOption) (*CallAck, error)
+	LeaveGame(ctx context.Context, in *LeaveGameReq, opts ...grpc.CallOption) (*CallAck, error)
 	//强制中断游戏
 	CloseGame(ctx context.Context, in *CloseGameReq, opts ...grpc.CallOption) (*CallAck, error)
 	//上/下分
@@ -342,9 +411,27 @@ func (c *gameServiceClient) KickUser(ctx context.Context, in *KickUserReq, opts 
 	return out, nil
 }
 
-func (c *gameServiceClient) StartGame(ctx context.Context, in *StartGameReq, opts ...grpc.CallOption) (*CallAck, error) {
+func (c *gameServiceClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*CallAck, error) {
 	out := new(CallAck)
-	err := c.cc.Invoke(ctx, "/protocol.GameService/StartGame", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/protocol.GameService/UpdateUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gameServiceClient) EnterGame(ctx context.Context, in *EnterGameReq, opts ...grpc.CallOption) (*CallAck, error) {
+	out := new(CallAck)
+	err := c.cc.Invoke(ctx, "/protocol.GameService/EnterGame", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gameServiceClient) LeaveGame(ctx context.Context, in *LeaveGameReq, opts ...grpc.CallOption) (*CallAck, error) {
+	out := new(CallAck)
+	err := c.cc.Invoke(ctx, "/protocol.GameService/LeaveGame", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +468,9 @@ func (c *gameServiceClient) AddPlayer(ctx context.Context, in *AddPlayerReq, opt
 // GameServiceServer is the server API for GameService service.
 type GameServiceServer interface {
 	KickUser(context.Context, *KickUserReq) (*CallAck, error)
-	StartGame(context.Context, *StartGameReq) (*CallAck, error)
+	UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*CallAck, error)
+	EnterGame(context.Context, *EnterGameReq) (*CallAck, error)
+	LeaveGame(context.Context, *LeaveGameReq) (*CallAck, error)
 	//强制中断游戏
 	CloseGame(context.Context, *CloseGameReq) (*CallAck, error)
 	//上/下分
@@ -397,8 +486,14 @@ type UnimplementedGameServiceServer struct {
 func (*UnimplementedGameServiceServer) KickUser(ctx context.Context, req *KickUserReq) (*CallAck, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method KickUser not implemented")
 }
-func (*UnimplementedGameServiceServer) StartGame(ctx context.Context, req *StartGameReq) (*CallAck, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartGame not implemented")
+func (*UnimplementedGameServiceServer) UpdateUserInfo(ctx context.Context, req *UpdateUserInfoReq) (*CallAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
+}
+func (*UnimplementedGameServiceServer) EnterGame(ctx context.Context, req *EnterGameReq) (*CallAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnterGame not implemented")
+}
+func (*UnimplementedGameServiceServer) LeaveGame(ctx context.Context, req *LeaveGameReq) (*CallAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveGame not implemented")
 }
 func (*UnimplementedGameServiceServer) CloseGame(ctx context.Context, req *CloseGameReq) (*CallAck, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CloseGame not implemented")
@@ -432,20 +527,56 @@ func _GameService_KickUser_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GameService_StartGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartGameReq)
+func _GameService_UpdateUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GameServiceServer).StartGame(ctx, in)
+		return srv.(GameServiceServer).UpdateUserInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protocol.GameService/StartGame",
+		FullMethod: "/protocol.GameService/UpdateUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GameServiceServer).StartGame(ctx, req.(*StartGameReq))
+		return srv.(GameServiceServer).UpdateUserInfo(ctx, req.(*UpdateUserInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GameService_EnterGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnterGameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServiceServer).EnterGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.GameService/EnterGame",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServiceServer).EnterGame(ctx, req.(*EnterGameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GameService_LeaveGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveGameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServiceServer).LeaveGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.GameService/LeaveGame",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServiceServer).LeaveGame(ctx, req.(*LeaveGameReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -513,8 +644,16 @@ var _GameService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _GameService_KickUser_Handler,
 		},
 		{
-			MethodName: "StartGame",
-			Handler:    _GameService_StartGame_Handler,
+			MethodName: "UpdateUserInfo",
+			Handler:    _GameService_UpdateUserInfo_Handler,
+		},
+		{
+			MethodName: "EnterGame",
+			Handler:    _GameService_EnterGame_Handler,
+		},
+		{
+			MethodName: "LeaveGame",
+			Handler:    _GameService_LeaveGame_Handler,
 		},
 		{
 			MethodName: "CloseGame",

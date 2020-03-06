@@ -11,11 +11,9 @@ import (
 	"os"
 )
 
-var gameName string
 var configPath string
 
 func main() {
-	flag.StringVar(&gameName, "game", "ddz", "-game=ddz")
 	flag.StringVar(&configPath, "conf", "C:\\Users\\yixin\\go\\rpg-demo\\config\\game.yaml", "-conf app/conf")
 	flag.Parse()
 
@@ -28,7 +26,7 @@ func main() {
 	db.InitMysql(conf.Mysql)
 
 	game := server.NewGame(conf)
-	switch gameName {
+	switch conf.GameName {
 	case ddz.GameName:
 		var g = ddz.NewDDZGame(game)
 		g.StartGame()

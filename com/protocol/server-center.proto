@@ -3,8 +3,6 @@ package protocol;
 import "client-account.proto";
 import "client-chat.proto";
 import "client-game.proto";
-// import "client-notify.proto";
-import "client-room.proto";
 import "header.proto";
 import "unity.proto";
 
@@ -32,22 +30,8 @@ service Center4GateService {
     rpc KickUser(KickUserReq) returns (CallAck) {
     }
 
-    //------------------ Room 房间 -----------------------
-    rpc CreateRoom(CreateRoomReq) returns (CreateRoomAck) {
-    }
-    rpc JoinRoom(JoinRoomReq) returns (JoinRoomAck) {
-    }
-    rpc ExitRoom(ExitRoomReq) returns (ExitRoomAck) {
-    }
-    rpc DiscardRoom(DiscardRoomReq) returns (DiscardRoomAck) {
-    }
-
     //------------------ Game 游戏 ------------------------
     rpc GetGameRoomTypeList(GetGameRoomTypeListReq) returns (GetGameRoomTypeListAck) {
-    }
-    rpc EnterGame(EnterGameReq) returns (EnterGameRep) {
-    }
-    rpc ExitGame(ExitGameReq) returns (ExitGameAck) {
     }
 
     //------------------- Chat 聊天系统 -------------------------

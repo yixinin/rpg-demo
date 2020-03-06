@@ -10,10 +10,16 @@ type Room struct {
 	roomId int64
 	status int8
 
-	players []*Player
-	pokers  []poker.Poker
-	discard []*DiscardPoker //已经打出去的牌
-	banker  int             //庄家座位号
+	groups        [][]*Player
+	players       []*Player
+	playerNum     int //房间人数
+	maxPlayer     int //房间最大人数
+	groupNum      int //队伍数
+	maxGroup      int //最大队伍数
+	grouPlayerNum int //每队人数
+	pokers        []poker.Poker
+	discard       []*DiscardPoker //已经打出去的牌
+	banker        int             //庄家座位号
 
 	points       int   //番数
 	playerPoints []int //玩家加倍
@@ -28,7 +34,7 @@ type DiscardPoker struct {
 	points int8        //番数
 }
 
-func LoadRoom(roomid int64) *Room {
+func (g *DDZGame) LoadRoom(roomid int64) *Room {
 	var c = default3RoomConfig
 	var room = &Room{
 		roomId:       roomid,
@@ -48,7 +54,7 @@ func (g *DDZGame) CreateRoom(seat int) *Room {
 		c = default4RoomConfig
 	}
 	var room = &Room{
-		roomId:       g.game.IdPool.GetOne(),
+		roomId:       g.game.RoomIdPool.GetOne(),
 		players:      make([]*Player, seat),
 		playerPoints: make([]int, c.seat),
 		config:       c,

@@ -12,11 +12,12 @@ import (
 )
 
 type Config struct {
-	Etcd  []string `yaml:"etcd"`
-	Grpc  string   `yaml:"grpc"` //监听地址 0.0.0.0:9999
-	Mysql *db.MysqlConfig
-	Redis *db.RedisConfig
-	Nats  *bus.Config
+	Etcd     []string `yaml:"etcd"`
+	Grpc     string   `yaml:"grpc"` //监听地址 0.0.0.0:9999
+	Mysql    *db.MysqlConfig
+	Redis    *db.RedisConfig
+	Nats     *bus.Config
+	GameName string `yaml:"game_name"`
 }
 
 // var DefaultConfig Config
@@ -29,6 +30,10 @@ func ParseConfig(path string) (*Config, error) {
 	var conf Config
 	err = yaml.Unmarshal(yamlFile, &conf)
 	ip.ServerIP = fmt.Sprintf("%s:%s", utils.IPAddress(), conf.Grpc)
+
+	if conf.GameName == "" {
+		conf.GameName = "ddz"
+	}
 
 	return &conf, err
 }

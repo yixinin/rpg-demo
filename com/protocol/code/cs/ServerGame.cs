@@ -26,27 +26,32 @@ namespace Protocol {
           string.Concat(
             "ChFzZXJ2ZXItZ2FtZS5wcm90bxIIcHJvdG9jb2waC3VuaXR5LnByb3RvGgxo",
             "ZWFkZXIucHJvdG8iSgoGUGxheWVyEhAKCHBsYXllcklkGAEgASgDEhAKCG5p",
-            "Y2tOYW1lGAIgASgJEg4KBmF2YXRhchgDIAEoCRIMCgRjb2luGAQgASgDIlIK",
-            "DFN0YXJ0R2FtZVJlcRIOCgZyb29tSWQYASABKAMSIQoHcGxheWVycxgCIAMo",
-            "CzIQLnByb3RvY29sLlBsYXllchIPCgdyb3VuZE5vGAMgASgJIh4KDENsb3Nl",
-            "R2FtZVJlcRIOCgZyb29tSWQYASABKAMiLAoKQWRkQ29pblJlcRIQCghwbGF5",
-            "ZXJJZBgBIAEoAxIMCgRjb2luGAIgASgDIjAKDEFkZFBsYXllclJlcRIgCgZw",
-            "bGF5ZXIYASABKAsyEC5wcm90b2NvbC5QbGF5ZXIyqQIKC0dhbWVTZXJ2aWNl",
-            "EjYKCEtpY2tVc2VyEhUucHJvdG9jb2wuS2lja1VzZXJSZXEaES5wcm90b2Nv",
-            "bC5DYWxsQWNrIgASOAoJU3RhcnRHYW1lEhYucHJvdG9jb2wuU3RhcnRHYW1l",
-            "UmVxGhEucHJvdG9jb2wuQ2FsbEFjayIAEjgKCUNsb3NlR2FtZRIWLnByb3Rv",
-            "Y29sLkNsb3NlR2FtZVJlcRoRLnByb3RvY29sLkNhbGxBY2siABI0CgdBZGRD",
-            "b2luEhQucHJvdG9jb2wuQWRkQ29pblJlcRoRLnByb3RvY29sLkNhbGxBY2si",
-            "ABI4CglBZGRQbGF5ZXISFi5wcm90b2NvbC5BZGRQbGF5ZXJSZXEaES5wcm90",
-            "b2NvbC5DYWxsQWNrIgBiBnByb3RvMw=="));
+            "Y2tOYW1lGAIgASgJEg4KBmF2YXRhchgDIAEoCRIMCgRjb2luGAQgASgDIjUK",
+            "EVVwZGF0ZVVzZXJJbmZvUmVxEhAKCG5pY2tOYW1lGAEgASgJEg4KBmF2YXRh",
+            "chgCIAEoCSIeCgxDbG9zZUdhbWVSZXESDgoGcm9vbUlkGAEgASgDIiwKCkFk",
+            "ZENvaW5SZXESEAoIcGxheWVySWQYASABKAMSDAoEY29pbhgCIAEoAyIwCgxB",
+            "ZGRQbGF5ZXJSZXESIAoGcGxheWVyGAEgASgLMhAucHJvdG9jb2wuUGxheWVy",
+            "Ih4KDEVudGVyR2FtZVJlcRIOCgZnYW1lSWQYASABKAUiDgoMTGVhdmVHYW1l",
+            "UmVxMqcDCgtHYW1lU2VydmljZRI2CghLaWNrVXNlchIVLnByb3RvY29sLktp",
+            "Y2tVc2VyUmVxGhEucHJvdG9jb2wuQ2FsbEFjayIAEkIKDlVwZGF0ZVVzZXJJ",
+            "bmZvEhsucHJvdG9jb2wuVXBkYXRlVXNlckluZm9SZXEaES5wcm90b2NvbC5D",
+            "YWxsQWNrIgASOAoJRW50ZXJHYW1lEhYucHJvdG9jb2wuRW50ZXJHYW1lUmVx",
+            "GhEucHJvdG9jb2wuQ2FsbEFjayIAEjgKCUxlYXZlR2FtZRIWLnByb3RvY29s",
+            "LkxlYXZlR2FtZVJlcRoRLnByb3RvY29sLkNhbGxBY2siABI4CglDbG9zZUdh",
+            "bWUSFi5wcm90b2NvbC5DbG9zZUdhbWVSZXEaES5wcm90b2NvbC5DYWxsQWNr",
+            "IgASNAoHQWRkQ29pbhIULnByb3RvY29sLkFkZENvaW5SZXEaES5wcm90b2Nv",
+            "bC5DYWxsQWNrIgASOAoJQWRkUGxheWVyEhYucHJvdG9jb2wuQWRkUGxheWVy",
+            "UmVxGhEucHJvdG9jb2wuQ2FsbEFjayIAYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.UnityReflection.Descriptor, global::Protocol.HeaderReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.Player), global::Protocol.Player.Parser, new[]{ "PlayerId", "NickName", "Avatar", "Coin" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.StartGameReq), global::Protocol.StartGameReq.Parser, new[]{ "RoomId", "Players", "RoundNo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.UpdateUserInfoReq), global::Protocol.UpdateUserInfoReq.Parser, new[]{ "NickName", "Avatar" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.CloseGameReq), global::Protocol.CloseGameReq.Parser, new[]{ "RoomId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.AddCoinReq), global::Protocol.AddCoinReq.Parser, new[]{ "PlayerId", "Coin" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.AddPlayerReq), global::Protocol.AddPlayerReq.Parser, new[]{ "Player" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.AddPlayerReq), global::Protocol.AddPlayerReq.Parser, new[]{ "Player" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.EnterGameReq), global::Protocol.EnterGameReq.Parser, new[]{ "GameId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.LeaveGameReq), global::Protocol.LeaveGameReq.Parser, null, null, null, null, null)
           }));
     }
     #endregion
@@ -266,11 +271,11 @@ namespace Protocol {
 
   }
 
-  public sealed partial class StartGameReq : pb::IMessage<StartGameReq> {
-    private static readonly pb::MessageParser<StartGameReq> _parser = new pb::MessageParser<StartGameReq>(() => new StartGameReq());
+  public sealed partial class UpdateUserInfoReq : pb::IMessage<UpdateUserInfoReq> {
+    private static readonly pb::MessageParser<UpdateUserInfoReq> _parser = new pb::MessageParser<UpdateUserInfoReq>(() => new UpdateUserInfoReq());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StartGameReq> Parser { get { return _parser; } }
+    public static pb::MessageParser<UpdateUserInfoReq> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -283,82 +288,69 @@ namespace Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartGameReq() {
+    public UpdateUserInfoReq() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartGameReq(StartGameReq other) : this() {
-      roomId_ = other.roomId_;
-      players_ = other.players_.Clone();
-      roundNo_ = other.roundNo_;
+    public UpdateUserInfoReq(UpdateUserInfoReq other) : this() {
+      nickName_ = other.nickName_;
+      avatar_ = other.avatar_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartGameReq Clone() {
-      return new StartGameReq(this);
+    public UpdateUserInfoReq Clone() {
+      return new UpdateUserInfoReq(this);
     }
 
-    /// <summary>Field number for the "roomId" field.</summary>
-    public const int RoomIdFieldNumber = 1;
-    private long roomId_;
+    /// <summary>Field number for the "nickName" field.</summary>
+    public const int NickNameFieldNumber = 1;
+    private string nickName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long RoomId {
-      get { return roomId_; }
+    public string NickName {
+      get { return nickName_; }
       set {
-        roomId_ = value;
+        nickName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
-    /// <summary>Field number for the "players" field.</summary>
-    public const int PlayersFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Protocol.Player> _repeated_players_codec
-        = pb::FieldCodec.ForMessage(18, global::Protocol.Player.Parser);
-    private readonly pbc::RepeatedField<global::Protocol.Player> players_ = new pbc::RepeatedField<global::Protocol.Player>();
+    /// <summary>Field number for the "avatar" field.</summary>
+    public const int AvatarFieldNumber = 2;
+    private string avatar_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Protocol.Player> Players {
-      get { return players_; }
-    }
-
-    /// <summary>Field number for the "roundNo" field.</summary>
-    public const int RoundNoFieldNumber = 3;
-    private string roundNo_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string RoundNo {
-      get { return roundNo_; }
+    public string Avatar {
+      get { return avatar_; }
       set {
-        roundNo_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        avatar_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as StartGameReq);
+      return Equals(other as UpdateUserInfoReq);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StartGameReq other) {
+    public bool Equals(UpdateUserInfoReq other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (RoomId != other.RoomId) return false;
-      if(!players_.Equals(other.players_)) return false;
-      if (RoundNo != other.RoundNo) return false;
+      if (NickName != other.NickName) return false;
+      if (Avatar != other.Avatar) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (RoomId != 0L) hash ^= RoomId.GetHashCode();
-      hash ^= players_.GetHashCode();
-      if (RoundNo.Length != 0) hash ^= RoundNo.GetHashCode();
+      if (NickName.Length != 0) hash ^= NickName.GetHashCode();
+      if (Avatar.Length != 0) hash ^= Avatar.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -372,14 +364,13 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (RoomId != 0L) {
-        output.WriteRawTag(8);
-        output.WriteInt64(RoomId);
+      if (NickName.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(NickName);
       }
-      players_.WriteTo(output, _repeated_players_codec);
-      if (RoundNo.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(RoundNo);
+      if (Avatar.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Avatar);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -389,12 +380,11 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (RoomId != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(RoomId);
+      if (NickName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(NickName);
       }
-      size += players_.CalculateSize(_repeated_players_codec);
-      if (RoundNo.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoundNo);
+      if (Avatar.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Avatar);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -403,16 +393,15 @@ namespace Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StartGameReq other) {
+    public void MergeFrom(UpdateUserInfoReq other) {
       if (other == null) {
         return;
       }
-      if (other.RoomId != 0L) {
-        RoomId = other.RoomId;
+      if (other.NickName.Length != 0) {
+        NickName = other.NickName;
       }
-      players_.Add(other.players_);
-      if (other.RoundNo.Length != 0) {
-        RoundNo = other.RoundNo;
+      if (other.Avatar.Length != 0) {
+        Avatar = other.Avatar;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -425,16 +414,12 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            RoomId = input.ReadInt64();
+          case 10: {
+            NickName = input.ReadString();
             break;
           }
           case 18: {
-            players_.AddEntriesFrom(input, _repeated_players_codec);
-            break;
-          }
-          case 26: {
-            RoundNo = input.ReadString();
+            Avatar = input.ReadString();
             break;
           }
         }
@@ -858,6 +843,239 @@ namespace Protocol {
             input.ReadMessage(Player);
             break;
           }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  ///进入游戏 展示房间列表
+  /// </summary>
+  public sealed partial class EnterGameReq : pb::IMessage<EnterGameReq> {
+    private static readonly pb::MessageParser<EnterGameReq> _parser = new pb::MessageParser<EnterGameReq>(() => new EnterGameReq());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<EnterGameReq> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protocol.ServerGameReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EnterGameReq() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EnterGameReq(EnterGameReq other) : this() {
+      gameId_ = other.gameId_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EnterGameReq Clone() {
+      return new EnterGameReq(this);
+    }
+
+    /// <summary>Field number for the "gameId" field.</summary>
+    public const int GameIdFieldNumber = 1;
+    private int gameId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int GameId {
+      get { return gameId_; }
+      set {
+        gameId_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as EnterGameReq);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(EnterGameReq other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (GameId != other.GameId) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (GameId != 0) hash ^= GameId.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (GameId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(GameId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (GameId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(GameId);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(EnterGameReq other) {
+      if (other == null) {
+        return;
+      }
+      if (other.GameId != 0) {
+        GameId = other.GameId;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            GameId = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class LeaveGameReq : pb::IMessage<LeaveGameReq> {
+    private static readonly pb::MessageParser<LeaveGameReq> _parser = new pb::MessageParser<LeaveGameReq>(() => new LeaveGameReq());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<LeaveGameReq> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protocol.ServerGameReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LeaveGameReq() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LeaveGameReq(LeaveGameReq other) : this() {
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LeaveGameReq Clone() {
+      return new LeaveGameReq(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as LeaveGameReq);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(LeaveGameReq other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(LeaveGameReq other) {
+      if (other == null) {
+        return;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
         }
       }
     }

@@ -8,11 +8,19 @@ message LinkGame4GateReq {
     string         server = 2;
 }
 
+message NotifyMessageReq {
+    repeated int64 uids = 1;
+    bytes          data = 2;
+}
 service GateService {
     rpc KickUser(KickUserReq) returns (CallAck) {
     }
 
     //连接Game服务器
     rpc LinkGameServer(stream LinkGame4GateReq) returns (CallAck) {
+    }
+
+    //主动推送消息
+    rpc NotifyMessage(NotifyMessageReq) returns (CallAck) {
     }
 }

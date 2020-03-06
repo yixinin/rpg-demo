@@ -18,9 +18,12 @@ func StartDDZ(game *server.Game) {
 }
 
 type DDZGame struct {
-	game   *server.Game
-	rooms  map[int32]*Room
-	player map[int64]Player
+	game      *server.Game
+	rooms     map[int64]*Room
+	player    map[int64]Player
+	team      map[int64]*Team
+	typeRooms map[string][]int64 //房间种类分列表
+	roomTypes []string           //房间种类
 }
 
 func NewDDZGame(game *server.Game) *DDZGame {
@@ -44,7 +47,8 @@ func StartGrpcService(address string, game *DDZGame) {
 	}
 
 	s := grpc.NewServer()
-	protocol.RegisterGameServiceServer(s, &DDZLogic{game: game})
+	protocol.RegisterGameServiceServer(s, &GameLogic{game: game})
+	protocol.RegisterGameDdzServiceServer(s, &DdzLogic{game: game})
 	err = s.Serve(lis)
 	if err != nil {
 		log.Fatal("listen grpc service error", err)

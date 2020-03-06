@@ -14,10 +14,11 @@ import (
 )
 
 type Game struct {
-	Grpc   *GrpcPool
-	Nats   *bus.Bus //消息队列
-	Etcd   *etcd.Service
-	IdPool *pool.IdPool
+	Grpc       *GrpcPool
+	Nats       *bus.Bus //消息队列
+	Etcd       *etcd.Service
+	RoomIdPool *pool.IdPool
+	TeamIdPool *pool.IdPool
 }
 
 func NewGame(conf *config.Config) *Game {
@@ -38,10 +39,10 @@ func NewGame(conf *config.Config) *Game {
 	}
 	var idpool = pool.NewIdPool(1000, 10000, CheckIdAvailable)
 	return &Game{
-		Grpc:   NewGrpcPool(conf.Etcd),
-		Nats:   n,
-		Etcd:   e,
-		IdPool: idpool,
+		Grpc:       NewGrpcPool(conf.Etcd),
+		Nats:       n,
+		Etcd:       e,
+		RoomIdPool: idpool,
 	}
 }
 

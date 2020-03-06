@@ -10,10 +10,9 @@ message Player {
     int64  coin     = 4;
 }
 
-message StartGameReq {
-    int64    roomId         = 1;
-    repeated Player players = 2;
-    string          roundNo = 3;
+message UpdateUserInfoReq {
+    string nickName = 1;
+    string avatar   = 2;
 }
 
 message CloseGameReq {
@@ -28,11 +27,26 @@ message AddPlayerReq {
     Player player = 1;
 }
 
+//进入游戏 展示房间列表
+message EnterGameReq {
+    int32 gameId = 1;
+}
+message LeaveGameReq {
+}
+
 service GameService {
     rpc KickUser(KickUserReq) returns (CallAck) {
     }
-    rpc StartGame(StartGameReq) returns (CallAck) {
+
+    rpc UpdateUserInfo(UpdateUserInfoReq) returns (CallAck) {
     }
+
+    rpc EnterGame(EnterGameReq) returns (CallAck) {
+    }
+
+    rpc LeaveGame(LeaveGameReq) returns (CallAck) {
+    }
+
     //强制中断游戏
     rpc CloseGame(CloseGameReq) returns (CallAck) {
     }

@@ -26,14 +26,18 @@ namespace Protocol {
           string.Concat(
             "ChFzZXJ2ZXItZ2F0ZS5wcm90bxIIcHJvdG9jb2waC3VuaXR5LnByb3RvGgxo",
             "ZWFkZXIucHJvdG8iLwoQTGlua0dhbWU0R2F0ZVJlcRILCgN1aWQYASADKAMS",
-            "DgoGc2VydmVyGAIgASgJMooBCgtHYXRlU2VydmljZRI2CghLaWNrVXNlchIV",
-            "LnByb3RvY29sLktpY2tVc2VyUmVxGhEucHJvdG9jb2wuQ2FsbEFjayIAEkMK",
-            "DkxpbmtHYW1lU2VydmVyEhoucHJvdG9jb2wuTGlua0dhbWU0R2F0ZVJlcRoR",
-            "LnByb3RvY29sLkNhbGxBY2siACgBYgZwcm90bzM="));
+            "DgoGc2VydmVyGAIgASgJIi4KEE5vdGlmeU1lc3NhZ2VSZXESDAoEdWlkcxgB",
+            "IAMoAxIMCgRkYXRhGAIgASgMMswBCgtHYXRlU2VydmljZRI2CghLaWNrVXNl",
+            "chIVLnByb3RvY29sLktpY2tVc2VyUmVxGhEucHJvdG9jb2wuQ2FsbEFjayIA",
+            "EkMKDkxpbmtHYW1lU2VydmVyEhoucHJvdG9jb2wuTGlua0dhbWU0R2F0ZVJl",
+            "cRoRLnByb3RvY29sLkNhbGxBY2siACgBEkAKDU5vdGlmeU1lc3NhZ2USGi5w",
+            "cm90b2NvbC5Ob3RpZnlNZXNzYWdlUmVxGhEucHJvdG9jb2wuQ2FsbEFjayIA",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.UnityReflection.Descriptor, global::Protocol.HeaderReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.LinkGame4GateReq), global::Protocol.LinkGame4GateReq.Parser, new[]{ "Uid", "Server" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.LinkGame4GateReq), global::Protocol.LinkGame4GateReq.Parser, new[]{ "Uid", "Server" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.NotifyMessageReq), global::Protocol.NotifyMessageReq.Parser, new[]{ "Uids", "Data" }, null, null, null, null)
           }));
     }
     #endregion
@@ -182,6 +186,156 @@ namespace Protocol {
           }
           case 18: {
             Server = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class NotifyMessageReq : pb::IMessage<NotifyMessageReq> {
+    private static readonly pb::MessageParser<NotifyMessageReq> _parser = new pb::MessageParser<NotifyMessageReq>(() => new NotifyMessageReq());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<NotifyMessageReq> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protocol.ServerGateReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public NotifyMessageReq() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public NotifyMessageReq(NotifyMessageReq other) : this() {
+      uids_ = other.uids_.Clone();
+      data_ = other.data_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public NotifyMessageReq Clone() {
+      return new NotifyMessageReq(this);
+    }
+
+    /// <summary>Field number for the "uids" field.</summary>
+    public const int UidsFieldNumber = 1;
+    private static readonly pb::FieldCodec<long> _repeated_uids_codec
+        = pb::FieldCodec.ForInt64(10);
+    private readonly pbc::RepeatedField<long> uids_ = new pbc::RepeatedField<long>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<long> Uids {
+      get { return uids_; }
+    }
+
+    /// <summary>Field number for the "data" field.</summary>
+    public const int DataFieldNumber = 2;
+    private pb::ByteString data_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb::ByteString Data {
+      get { return data_; }
+      set {
+        data_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as NotifyMessageReq);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(NotifyMessageReq other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!uids_.Equals(other.uids_)) return false;
+      if (Data != other.Data) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= uids_.GetHashCode();
+      if (Data.Length != 0) hash ^= Data.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      uids_.WriteTo(output, _repeated_uids_codec);
+      if (Data.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Data);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += uids_.CalculateSize(_repeated_uids_codec);
+      if (Data.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Data);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(NotifyMessageReq other) {
+      if (other == null) {
+        return;
+      }
+      uids_.Add(other.uids_);
+      if (other.Data.Length != 0) {
+        Data = other.Data;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 8: {
+            uids_.AddEntriesFrom(input, _repeated_uids_codec);
+            break;
+          }
+          case 18: {
+            Data = input.ReadBytes();
             break;
           }
         }

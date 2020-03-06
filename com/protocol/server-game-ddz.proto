@@ -1,0 +1,140 @@
+syntax = "proto3";
+package protocol;
+import "header.proto";
+
+//加入房间 如果是小队队长 则队员也会加入
+message JoinRoomReq {
+    int64  roomId   = 1; //直接加入房间
+    int64  uid      = 2;
+    string gameType = 3;
+    int64  teamId   = 4; //小队
+}
+message JoinTeamReq {
+    int64 teamId    = 1; //没有id则创建小队
+    int64 uid       = 2;
+    int64 inviteUid = 3; //邀请人
+}
+
+//发牌
+message DealPokerNotify {
+    NotiHeader header     = 1;
+    repeated int32 poker  = 2; //牌
+    int32          banker = 3; //地主座次
+    int32          any    = 4; //天癞子 （如果是天地癞子）
+}
+
+//明牌
+message CallVisibleReq {
+    ReqHeader header = 1;
+}
+
+message CallVisibleAck {
+    AckHeader header = 1;
+}
+
+message CallVisibleNotify {
+    NotiHeader header    = 1;
+    repeated int32 poker = 2; //牌
+    int32          seat  = 3; //座次
+}
+
+//提示叫地主、抢地主
+message CallBankerNotify {
+    NotiHeader header = 1;
+}
+//开始叫地主
+message CallBankerReq {
+    ReqHeader header = 1;
+    bool      call   = 2; //是否叫地主/抢地主
+}
+message CallBankerAck {
+    AckHeader header = 1;
+}
+
+//加倍提示
+message CallDuobleNotify {
+    NotiHeader header = 1;
+}
+
+//是否加倍
+message CallDuobleReq {
+    ReqHeader header = 1;
+    int32     points = 2; //倍数
+}
+message CallDuobleAck {
+    AckHeader header = 1;
+}
+
+//（地）癞子 提示
+message RandomAnyNotify {
+    NotiHeader header = 1;
+    int32      any    = 2;
+}
+
+//出牌提示
+message DiscardPokerNotify {
+    NotiHeader header  = 1;
+    repeated int32 pre = 2; //上家出牌
+}
+
+//出牌
+message DiscardPokerReq {
+    ReqHeader header     = 1;
+    repeated int32 poker = 2;
+}
+message DiscardPokerAck {
+    AckHeader header = 1;
+}
+
+//离线、托管、超时 自动出牌
+message DiscardNotify {
+    NotiHeader header    = 1;
+    int32      seat      = 2; //座位号
+    repeated int32 poker = 3; //出牌
+}
+//倍数更新 （炸弹）
+message UpdatePointsNotify {
+    NotiHeader header = 1;
+    int64      points = 2; //总倍数
+}
+
+//打完收工
+message SettleNotify {
+    NotiHeader header = 1;
+    int64      points = 2; //总倍数
+    string     title  = 3; // 春天等
+    string     extra  = 4;
+    message    SettleItem {
+        int32 seat     = 1; //座次
+        int64 coin     = 2; //金币变化
+        int64 leftCoin = 3; //剩余
+        int64 points   = 4; //倍数
+    }
+    repeated SettleItem items = 5;
+}
+
+service GameDdzService {
+
+    rpc JoinTeam(JoinTeamReq) returns (CallAck) {
+    }
+
+    //房间满员时开始游戏
+    rpc JoinRoom(JoinRoomReq) returns (CallAck) {
+    }
+
+    //明牌
+    rpc CallVisible(CallVisibleReq) returns (CallVisibleAck) {
+    }
+
+    //叫地主
+    rpc CallBanker(CallBankerReq) returns (CallBankerAck) {
+    }
+
+    //加倍
+    rpc CallDuoble(CallDuobleReq) returns (CallDuobleAck) {
+    }
+
+    //出牌
+    rpc DiscardPoker(DiscardPokerReq) returns (DiscardPokerAck) {
+    }
+}

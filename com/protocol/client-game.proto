@@ -18,20 +18,3 @@ message GetGameRoomTypeListAck {
     }
     repeated GameTypeItem items = 3;
 }
-message EnterGameReq {
-    ReqHeader header   = 1;
-    int32     gameId   = 2;
-    int32     gameType = 3;
-}
-
-message EnterGameAck {
-    AckHeader header = 1;
-}
-
-message ExitGameReq {
-    ReqHeader header = 1;
-}
-
-message ExitGameAck {
-    AckHeader header = 1;
-}
