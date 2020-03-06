@@ -1,6 +1,15 @@
-package server
+package ddz
 
-func (g *Gateway) handleMessageQueue(m *nats.Msg) {
+import (
+	"com/lib/log"
+	"com/utils"
+	"reflect"
+
+	"github.com/davyxu/cellnet/codec"
+	nats "github.com/nats-io/nats.go"
+)
+
+func (g *DDZGame) handleMessageQueue(m *nats.Msg) {
 	msgIntface, _, err := codec.DecodeMessage(int(utils.StringHash(m.Subject)), m.Data)
 	if err != nil {
 		log.Error(err)

@@ -1,8 +1,8 @@
 package server
 
 import (
-	"rpg-demo/lib/etcd"
-	"rpg-demo/lib/log"
+	"com/lib/etcd"
+	"com/lib/log"
 	"strconv"
 	"strings"
 	"time"
@@ -95,12 +95,12 @@ func (s *GrpcPool) ListenGrpc() {
 					}
 					s.games[v.Info.IP] = conn
 					if len(ks) >= 3 {
-						gameid, err := strconv.ParseInt(ks[2], 10.32)
+						gameid, err := strconv.ParseInt(ks[2], 10, 32)
 						if err == nil {
-							if _, ok := s.game[gameid]; !ok {
-								s.game[gameid] = []string{v.Info.IP}
+							if _, ok := s.game[int32(gameid)]; !ok {
+								s.game[int32(gameid)] = []string{v.Info.IP}
 							} else {
-								s.game[gameid] = append(s.game[gameid], v.Info.IP)
+								s.game[int32(gameid)] = append(s.game[int32(gameid)], v.Info.IP)
 							}
 						}
 					}
@@ -147,8 +147,8 @@ func (s *GrpcPool) RemoveOfflineNode(ips ...string) {
 		//删除游戏节点
 		for k1, v1 := range s.game {
 			keeps := make([]string, 0, len(v1))
-			for i, node := range v1 {
-				if ip != node {
+			for _, node := range v1 {
+				if k != node {
 					keeps = append(keeps, node)
 				}
 			}

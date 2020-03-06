@@ -1,5 +1,7 @@
 package ddz
 
+const GameName = "ddz"
+
 type RoomConfig struct {
 	seat     int // 3/4
 	timeout  int //出牌读秒

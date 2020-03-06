@@ -1,4 +1,4 @@
-package card
+package poker
 
 import (
 	"fmt"
@@ -16,5 +16,4 @@ func Test_Card(t *testing.T) {
 		sort.Sort(v)
 		fmt.Println(len(v), v)
 	}
-
 }

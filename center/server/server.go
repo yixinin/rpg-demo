@@ -1,11 +1,11 @@
 package server
 
 import (
-	"rpg-demo/center/iface"
-	"rpg-demo/config"
-	"rpg-demo/lib/bus"
-	"rpg-demo/lib/etcd"
-	"rpg-demo/lib/log"
+	"center/iface"
+	"com/config"
+	"com/lib/bus"
+	"com/lib/etcd"
+	"com/lib/log"
 	"sync"
 )
 

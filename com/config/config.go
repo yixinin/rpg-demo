@@ -1,12 +1,12 @@
 package config
 
 import (
+	"com/db"
+	"com/ip"
+	"com/lib/bus"
+	"com/utils"
 	"fmt"
 	"io/ioutil"
-	"rpg-demo/db"
-	"rpg-demo/ip"
-	"rpg-demo/lib/bus"
-	"rpg-demo/utils"
 
 	yaml "gopkg.in/yaml.v2"
 )

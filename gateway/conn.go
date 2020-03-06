@@ -1,10 +1,10 @@
 package main
 
 import (
+	"com/cache"
+	"com/db"
+	"com/protocol"
 	"errors"
-	"rpg-demo/cache"
-	"rpg-demo/db"
-	"rpg-demo/protocol"
 	"strconv"
 	"sync"
 

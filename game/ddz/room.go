@@ -1,51 +1,60 @@
 package ddz
 
 import (
-	"rpg-demo/game/ddz/card"
+	"game/ddz/poker"
 	"sync"
 )
 
 type Room struct {
 	sync.Mutex
-	id     int32
+	roomId int64
 	status int8
 
 	players []*Player
-	pokers  []*card.Poker
+	pokers  []poker.Poker
 	discard []*DiscardPoker //已经打出去的牌
 	banker  int             //庄家座位号
 
 	points       int   //番数
-	playerPoints []int //加倍
+	playerPoints []int //玩家加倍
 
 	robotConfig *RobotConfig
 	config      *RoomConfig
 }
 
 type DiscardPoker struct {
-	seat   int        //座位号
-	poker  card.Poker //出牌
-	points int8       //番数
+	seat   int         //座位号
+	poker  poker.Poker //出牌
+	points int8        //番数
 }
 
-func LoadRoom(roomid int32) *Room {
+func LoadRoom(roomid int64) *Room {
 	var c = default3RoomConfig
 	var room = &Room{
-		id:      roomid,
-		players: make([]*Player, c.seat),
-		config:  c,
+		roomId:       roomid,
+		players:      make([]*Player, c.seat),
+		playerPoints: make([]int, c.seat),
+		config:       c,
+	}
+	for i := range room.playerPoints {
+		room.playerPoints[i] = 1
 	}
 	return room
 }
 
-func CreateRoom(seat int) *Room {
+func (g *DDZGame) CreateRoom(seat int) *Room {
 	var c = default3RoomConfig
 	if seat == 4 {
 		c = default4RoomConfig
 	}
 	var room = &Room{
-		players: make([]*Player, seat),
-		config:  c,
+		roomId:       g.game.IdPool.GetOne(),
+		players:      make([]*Player, seat),
+		playerPoints: make([]int, c.seat),
+		config:       c,
+	}
+	for i := range room.playerPoints {
+		room.playerPoints[i] = 1
 	}
 	return room
 }

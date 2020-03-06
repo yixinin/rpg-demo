@@ -1,8 +1,8 @@
 package main
 
 import (
-	"rpg-demo/lib/etcd"
-	"rpg-demo/lib/log"
+	"com/lib/etcd"
+	"com/lib/log"
 	"strings"
 	"time"
 

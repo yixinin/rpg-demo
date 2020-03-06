@@ -1,12 +1,12 @@
 package main
 
 import (
+	"com/config"
+	"com/db"
+	"com/lib/hook"
+	"com/lib/log"
 	"flag"
 	"os"
-	"rpg-demo/config"
-	"rpg-demo/db"
-	"rpg-demo/lib/hook"
-	"rpg-demo/lib/log"
 )
 
 var configPath string

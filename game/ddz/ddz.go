@@ -1,12 +1,12 @@
 package ddz
 
 import (
+	"com/ip"
+	"com/protocol"
 	"fmt"
+	"game/server"
 	"log"
 	"net"
-	"rpg-demo/game/server"
-	"rpg-demo/ip"
-	"rpg-demo/protocol"
 
 	"google.golang.org/grpc"
 )
@@ -30,6 +30,8 @@ func NewDDZGame(game *server.Game) *DDZGame {
 }
 
 func (g *DDZGame) StartGame() {
+	g.game.SubMessageQueue(g.handleMessageQueue)
+	g.game.StartGame()
 	StartGrpcService(ip.ServerIP, g)
 }
 
@@ -42,7 +44,7 @@ func StartGrpcService(address string, game *DDZGame) {
 	}
 
 	s := grpc.NewServer()
-	protocol.RegisterGameServiceServer(s, &DDZService{game: game})
+	protocol.RegisterGameServiceServer(s, &DDZLogic{game: game})
 	err = s.Serve(lis)
 	if err != nil {
 		log.Fatal("listen grpc service error", err)

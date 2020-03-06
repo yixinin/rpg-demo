@@ -1,15 +1,15 @@
 package main
 
 import (
+	"com/config"
+	"com/ip"
+	"com/lib/bus"
+	"com/lib/etcd"
+	"com/lib/log"
+	"com/protocol"
+	"com/utils"
 	"errors"
 	"fmt"
-	"rpg-demo/config"
-	"rpg-demo/ip"
-	"rpg-demo/lib/bus"
-	"rpg-demo/lib/etcd"
-	"rpg-demo/lib/log"
-	"rpg-demo/protocol"
-	"rpg-demo/utils"
 
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/cellnet/peer"

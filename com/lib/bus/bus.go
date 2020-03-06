@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"rpg-demo/lib/log"
+	"com/lib/log"
 
 	"github.com/gogo/protobuf/proto"
 	nats "github.com/nats-io/nats.go"

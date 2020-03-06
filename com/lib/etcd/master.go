@@ -1,10 +1,10 @@
 package etcd
 
 import (
+	"com/lib/log"
 	"context"
 	"encoding/json"
 	"fmt"
-	"rpg-demo/lib/log"
 	"time"
 
 	"go.etcd.io/etcd/clientv3"

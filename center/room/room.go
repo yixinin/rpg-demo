@@ -1,8 +1,8 @@
 package room
 
 import (
+	"com/enums"
 	"errors"
-	"rpg-demo/enums"
 )
 
 var ddzGameTypes map[int32]string

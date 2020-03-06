@@ -1,12 +1,12 @@
 package rpc
 
 import (
+	"center/logic"
+	"center/server"
+	"com/protocol"
 	"fmt"
 	"log"
 	"net"
-	"rpg-demo/center/logic"
-	"rpg-demo/center/server"
-	"rpg-demo/protocol"
 
 	"google.golang.org/grpc"
 )

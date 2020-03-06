@@ -1,6 +1,6 @@
 package logic
 
-import "rpg-demo/assets"
+import "com/assets"
 
 type Center4GameLogic struct {
 	RoomAssets assets.DDZRoomAssets

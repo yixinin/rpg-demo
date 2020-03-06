@@ -1,16 +1,18 @@
 package game
 
 import (
+	"com/config"
+	"com/db"
+	"com/lib/hook"
+	"com/lib/log"
 	"flag"
+	"game/ddz"
+	"game/server"
 	"os"
-	"rpg-demo/config"
-	"rpg-demo/db"
-	"rpg-demo/game/server"
-	"rpg-demo/lib/hook"
-	"rpg-demo/lib/log"
 )
 
 var gameName string
+var configPath string
 
 func main() {
 	flag.StringVar(&gameName, "game", "ddz", "-game=ddz")
@@ -26,11 +28,15 @@ func main() {
 	db.InitMysql(conf.Mysql)
 
 	game := server.NewGame(conf)
-	game.StartGame()
+	switch gameName {
+	case ddz.GameName:
+		var g = ddz.NewDDZGame(game)
+		g.StartGame()
+	}
 
 	var app = hook.NewApp()
-	app.InstallShutdownHook(game.grpc)
-	app.InstallShutdownHook(game.etcd)
-	app.InstallShutdownHook(game.nats)
+	app.InstallShutdownHook(game.Grpc)
+	app.InstallShutdownHook(game.Nats)
+	app.InstallShutdownHook(game.Etcd)
 	app.Start()
 }

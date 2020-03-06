@@ -1,8 +1,8 @@
 package db
 
 import (
+	"com/models"
 	"fmt"
-	"rpg-demo/center/models"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"

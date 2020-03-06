@@ -1,9 +1,9 @@
 package cache
 
 import (
+	"com/db"
+	"com/ip"
 	"fmt"
-	"rpg-demo/db"
-	"rpg-demo/ip"
 	"time"
 )
 

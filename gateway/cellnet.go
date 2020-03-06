@@ -1,9 +1,9 @@
 package main
 
 import (
+	"com/protocol"
 	"fmt"
 	"reflect"
-	"rpg-demo/protocol"
 	"strings"
 
 	"github.com/davyxu/cellnet"

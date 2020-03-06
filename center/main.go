@@ -1,14 +1,14 @@
 package center
 
 import (
+	"center/rpc"
+	"center/server"
+	"com/config"
+	"com/db"
+	"com/lib/hook"
+	"com/lib/log"
 	"flag"
 	"os"
-	"rpg-demo/center/rpc"
-	"rpg-demo/center/server"
-	"rpg-demo/config"
-	"rpg-demo/db"
-	"rpg-demo/lib/hook"
-	"rpg-demo/lib/log"
 )
 
 var configPath string
